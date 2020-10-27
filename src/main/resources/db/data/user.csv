@@ -1,0 +1,3 @@
+id,username,password,first_name,last_name,email,role,created_by,last_modified_by
+1,admin,$2a$10$NraZIVioTcwm2Ua0CvrZEOKKRgCaVDa82iky8nF9/HfZ31nfWnQfK,admin,admin,admin@example.com,ADMIN,system,system
+2,user,$2a$10$i5qhlPauoO8gYOTQdmfyBeKYtWPHVPjlAsgES6NgIL44M9bKPcRem,user,user,user@example.com,USER,system,system

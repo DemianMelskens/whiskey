@@ -1,0 +1,119 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet author="dmelskens" id="000001">
+    <createTable tableName="user">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="username" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="email" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="password" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="first_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="role" type="varchar(255)"/>
+      <column name="last_login" type="datetime"/>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)" defaultValueComputed="NOW(6)"/>
+      <column name="last_modified_by" type="VARCHAR(255)"/>
+      <column name="last_modified_date" type="datetime(6)" defaultValueComputed="NOW(6)"/>
+    </createTable>
+
+    <createTable tableName="bottle">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)"/>
+      <column name="age" type="bigint"/>
+      <column name="abv" type="bigint"/>
+      <column name="volume" type="bigint"/>
+      <column name="brand_id" type="bigint"/>
+    </createTable>
+
+    <createTable tableName="favorites">
+      <column name="user_id" type="bigint"/>
+      <column name="bottle_id" type="bigint"/>
+    </createTable>
+
+    <addPrimaryKey tableName="favorites" columnNames="user_id, bottle_id" constraintName="pk_favorites"/>
+
+    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="favorites"
+                             constraintName="user_favorites_fk" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                             validate="true"/>
+
+    <addForeignKeyConstraint baseColumnNames="bottle_id" baseTableName="favorites"
+                             constraintName="bottle_favorites_fk" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="bottle"
+                             validate="true"/>
+
+    <createTable tableName="brand">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)"/>
+      <column name="distillery_id" type="bigint"/>
+      <column name="bottler_id" type="bigint"/>
+    </createTable>
+
+    <createTable tableName="distillery">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)"/>
+      <column name="country" type="varchar(255)"/>
+      <column name="state" type="varchar(255)"/>
+      <column name="city" type="varchar(255)"/>
+      <column name="street_name" type="varchar(255)"/>
+      <column name="zip_code" type="varchar(255)"/>
+      <column name="house_number" type="varchar(255)"/>
+      <column name="lat" type="double"/>
+      <column name="lon" type="double"/>
+    </createTable>
+
+    <createTable tableName="bottler">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)"/>
+      <column name="country" type="varchar(255)"/>
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="brand_id" baseTableName="bottle"
+                             constraintName="bottle_brand_fk" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="brand"
+                             validate="true"/>
+
+    <addForeignKeyConstraint baseColumnNames="distillery_id" baseTableName="brand"
+                             constraintName="brand_distillery_fk" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="distillery"
+                             validate="true"/>
+
+    <addForeignKeyConstraint baseColumnNames="bottler_id" baseTableName="brand"
+                             constraintName="brand_bottler_fk" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="bottler"
+                             validate="true"/>
+  </changeSet>
+
+  <changeSet author="dmelskens" id="000002" context="dummy">
+    <loadData tableName="user" file="../data/user.csv" relativeToChangelogFile="true"/>
+    <loadData tableName="distillery" file="../data/distillery.csv" relativeToChangelogFile="true"/>
+    <loadData tableName="bottler" file="../data/bottler.csv" relativeToChangelogFile="true"/>
+    <loadData tableName="brand" file="../data/brand.csv" relativeToChangelogFile="true"/>
+    <loadData tableName="bottle" file="../data/bottle.csv" relativeToChangelogFile="true"/>
+    <loadData tableName="favorites" file="../data/favorites.csv" relativeToChangelogFile="true"/>
+  </changeSet>
+</databaseChangeLog>

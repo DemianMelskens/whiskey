@@ -1,0 +1,20 @@
+gradle.taskGraph.whenReady {
+    if (project.hasProperty("dev")) {
+        project.liquibase.runList = "main"
+    }
+}
+
+liquibase {
+    activities {
+        main {
+            driver "com.mysql.jdbc.Driver"
+            url "jdbc:mysql://localhost:3306/whiskey"
+            username "whiskey"
+            password "whiskey"
+            changeLogFile "src/main/resources/db/db.changelog-master.xml"
+            defaultSchemaName ""
+            logLevel "debug"
+            classpath "src/main/resources/"
+        }
+    }
+}

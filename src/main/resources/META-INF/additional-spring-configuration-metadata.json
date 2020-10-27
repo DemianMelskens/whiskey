@@ -1,0 +1,48 @@
+{
+  "properties": [
+    {
+      "name": "application.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for application.jwt.secret."
+    },
+    {
+      "name": "application.jwt.base64-secret",
+      "type": "java.lang.String",
+      "description": "Description for application.jwt.base64-secret."
+    },
+    {
+      "name": "application.jwt.expiration",
+      "type": "java.lang.String",
+      "description": "Description for application.jwt.expiration."
+    },
+    {
+      "name": "application.cors.allowed-origins",
+      "type": "java.util.List",
+      "description": "Description for application.cors.allowed-origins."
+    },
+    {
+      "name": "application.cors.allowed-methods",
+      "type": "java.util.List",
+      "description": "Description for application.cors.allowed-methods."
+    },
+    {
+      "name": "application.cors.allowed-headers",
+      "type": "java.util.List",
+      "description": "Description for application.cors.allowed-headers."
+    },
+    {
+      "name": "application.cors.exposed-headers",
+      "type": "java.util.List",
+      "description": "Description for application.cors.exposed-headers."
+    },
+    {
+      "name": "application.cors.allow-credentials",
+      "type": "java.lang.Boolean",
+      "description": "Description for application.cors.allow-credentials."
+    },
+    {
+      "name": "application.cors.max-age",
+      "type": "java.lang.Long",
+      "description": "Description for application.cors.max-age."
+    }
+  ] }

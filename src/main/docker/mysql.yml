@@ -1,0 +1,12 @@
+version: '2'
+services:
+  whiskey-mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_USER=whiskey
+      - MYSQL_ROOT_PASSWORD=whiskey
+      - MYSQL_PASSWORD=whiskey
+      - MYSQL_DATABASE=whiskey
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp

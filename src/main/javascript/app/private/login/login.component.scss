@@ -1,0 +1,25 @@
+@import "src/main/javascript/assets/scss/mixins";
+@import "src/main/javascript/assets/scss/colors";
+
+:host {
+  height: 100vh;
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+
+  .banner {
+    background-color: $background-primary;
+
+    @include phone-only {
+      display: none;
+    }
+  }
+
+  .login {
+    background-color: $background;
+  }
+
+  section {
+    flex: 1 50%;
+  }
+}

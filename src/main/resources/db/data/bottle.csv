@@ -1,0 +1,15 @@
+id,name,age,abv,volume,brand_id
+1,dalwhinnie 15 years single malt,15,40,700,1
+2,dalwhinnie winters gold,-1,40,700,1
+3,dalwhinnie distillers edition 1997-2014,-1,40,700,1
+4,dalwhinnie distillers edition 2002-2017,-1,40,700,1
+5,dalwhinnie triple matured,-1,40,700,1
+6,dalwhinnie 30 years special release 2020,30,40,700,1
+7,laphroaig 10 years cask strength,10,40,700,2
+8,laphroaig 25 years cask strength,25,40,700,2
+9,laphroaig port wood,-1,40,700,2
+10,laphroaig the 1815 legacy edition,-1,40,700,2
+11,laphroaig px cask,-1,40,700,2
+12,laphroaig four oak,-1,40,700,2
+13,laphroaig càirdeas port & wine,-1,40,700,2
+14,johnnie walker red label,-1,40,700,3
