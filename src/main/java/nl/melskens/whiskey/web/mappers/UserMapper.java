@@ -16,10 +16,17 @@ public abstract class UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", source = "password", qualifiedByName = "encodePassword")
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "lastLogin", ignore = true)
+    @Mapping(target = "favorites", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     public abstract User toEntity(RegisterDto dto);
 
     @Named("encodePassword")
-    String encodePassword(String password) {
+    String encodePassword(final String password) {
         return encoder.encode(password);
     }
 }

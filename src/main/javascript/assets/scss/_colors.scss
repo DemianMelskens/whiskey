@@ -1,10 +1,9 @@
-$background:           #f3f2ee;
-$background-primary:   #F2A65A;
-$primary:              #387ef5;
-$secondary:            #32db64;
-$danger:               #f53d3d;
-$light:                #f4f4f4;
-$dark:                 #000;
-$popover:              #404040;
-$unread:               #808080;
-$note:                 #666;
+$dark: #000000;
+$mid: #8a8a8a;
+$light: #ffffff;
+
+$primary: #042139;
+$primary-dark: darken($primary, 10);
+$primary-light: lighten($primary, 10);
+
+$danger: #ca1616;

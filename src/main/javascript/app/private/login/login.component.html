@@ -1,18 +1,16 @@
 <section class="banner">
-  <img src="./main/javascript/assets/images/pot-still.svg" alt="logo" class="logo">
-  <h2 class="title">Whiskey World</h2>
+  <h2 class="title">[Logo]</h2>
 </section>
 <section class="login">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2>Login</h2>
     <label>
-      <input type="text" formControlName="username" placeholder="Username">
+      <input type="text" formControlName="username" placeholder="Username"/>
     </label>
     <label>
-      <input type="password" formControlName="password" placeholder="Password">
+      <input type="password" formControlName="password" placeholder="Password"/>
     </label>
-    <button type="submit" [disabled]="!loginForm.valid">Login</button>
-    <div>
-      <span>New to Whiskey World? <a routerLink="/register">Create a new account within two minutes</a></span>
-    </div>
+    <button type="submit" class="primary" [disabled]="!loginForm.valid">Login</button>
+    <span>New? <a routerLink="/register">register now!</a></span>
   </form>
 </section>

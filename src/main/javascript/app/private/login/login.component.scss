@@ -2,24 +2,34 @@
 @import "src/main/javascript/assets/scss/colors";
 
 :host {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   height: 100vh;
-  display: flex;
-  flex-flow: row wrap;
-  text-align: center;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20%;
+  }
 
   .banner {
-    background-color: $background-primary;
-
-    @include phone-only {
-      display: none;
-    }
+    background-color: $primary;
+    color: $light;
   }
 
   .login {
-    background-color: $background;
-  }
+    background-color: $light;
+    color: $dark;
 
-  section {
-    flex: 1 50%;
+    form {
+      span {
+        font-size: 0.8rem;
+      }
+      button{
+        float: right;
+      }
+    }
   }
 }

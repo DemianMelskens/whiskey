@@ -23,12 +23,11 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final CorsFilter corsFilter;
     private final TokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
 
     @Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    public void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -41,25 +40,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(final WebSecurity web) {
         web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .antMatchers("/swagger-ui/index.html")
-                .antMatchers("/test/**");
+            .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/swagger-ui/index.html")
+            .antMatchers("/test/**");
     }
 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
         http
-                .csrf().disable()//NOSONAR
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()//NOSONAR
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/bottles", "/brands", "/distilleries", "/bottlers").permitAll()
-                .antMatchers("/bottles/favorites").authenticated()
-                .anyRequest().hasAuthority(Role.ADMIN.name())
-                .and()
-                .apply(securityConfigurerAdapter());
+            .csrf().disable()//NOSONAR
+            .authorizeRequests()//NOSONAR
+            .antMatchers("/authenticate").permitAll()
+            .antMatchers("/register").permitAll()
+            .antMatchers(HttpMethod.GET, "/bottles", "/brands", "/distilleries", "/bottlers").permitAll()
+            .antMatchers("/bottles/favorites").authenticated()
+            .anyRequest().hasAuthority(Role.ADMIN.name())
+            .and()
+            .apply(securityConfigurerAdapter());
         // @formatter:on
     }
 

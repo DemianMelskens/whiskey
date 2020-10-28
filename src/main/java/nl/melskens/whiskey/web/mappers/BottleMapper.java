@@ -15,5 +15,6 @@ public interface BottleMapper {
     List<BottleDto> toDtos(List<Bottle> whiskies);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "brand", ignore = true)
     Bottle toEntity(BottleDto dto);
 }
