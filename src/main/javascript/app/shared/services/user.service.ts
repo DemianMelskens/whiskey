@@ -1,22 +1,32 @@
 import {Injectable} from '@angular/core';
-import {tap} from 'rxjs/operators';
 import {UserClient} from '../clients/user.client';
-import {AuthenticationService} from './authentication.service';
-import {Observable} from 'rxjs';
-import {JwtDto} from '../clients/dtos/user/jwt.dto';
+import {User} from "../domain/user.model";
+import {catchError, map} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
 
+    private _currentUser?: User;
+
     constructor(
-        private userClient: UserClient,
-        private authenticationService: AuthenticationService
+        private userClient: UserClient
     ) {
     }
 
-    public authenticate(username: string, password: string): Observable<JwtDto> {
-        return this.userClient.authenticate({username, password, rememberMe: false}).pipe(
-            tap(jwt => this.authenticationService.setToken(jwt.token))
+    public getCurrentUser(): User {
+        return this._currentUser;
+    }
+
+    public authenticateUser(): Observable<boolean> {
+        return this.userClient.getCurrentUser().pipe(
+            map((user: User) => {
+                this._currentUser = user;
+                return true;
+            }),
+            catchError(() => {
+                return of(false);
+            })
         );
     }
 }

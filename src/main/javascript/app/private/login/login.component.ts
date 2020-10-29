@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
-import {UserService} from '../../shared/services/user.service';
+import {ActivatedRoute, Router} from "@angular/router";
+import {AuthenticationService} from "../../shared/services/authentication.service";
 
 @Component({
     selector: 'app-login',
@@ -12,8 +13,14 @@ export class LoginComponent implements OnInit {
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
+    invalidCredentials = false;
 
-    constructor(private formBuilder: FormBuilder, private userService: UserService) {
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private authenticationService: AuthenticationService
+    ) {
     }
 
     ngOnInit(): void {
@@ -28,17 +35,19 @@ export class LoginComponent implements OnInit {
     }
 
     setErrors(errors: any): void {
-        this.loginForm.setErrors(errors);
+        this.invalidCredentials = true;
         this.username.setErrors(errors);
         this.password.setErrors(errors);
     }
 
     onSubmit(): void {
-        this.userService.authenticate(
+        this.authenticationService.authenticate(
             this.loginForm.controls.username.value,
             this.loginForm.controls.password.value
         ).subscribe(
-            () => {}, //TODO: route to next page
+            () => {
+                this.router.navigate(['private', 'admin']);
+            },
             () => {
                 this.setErrors({wrong: {message: 'username or password was wrong'}});
             }

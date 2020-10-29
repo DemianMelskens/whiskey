@@ -2,34 +2,46 @@
 @import "src/main/javascript/assets/scss/colors";
 
 :host {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    height: 100vh;
 
-  section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20%;
-  }
-
-  .banner {
-    background-color: $primary;
-    color: $light;
-  }
-
-  .login {
-    background-color: $light;
-    color: $dark;
-
-    form {
-      span {
-        font-size: 0.8rem;
-      }
-      button{
-        float: right;
-      }
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20%;
     }
-  }
+
+    .banner {
+        background-color: $primary;
+        color: $light;
+
+        @include tablet-landscape {
+            display: none;
+        }
+    }
+
+    .login {
+        background-color: $light;
+        color: $dark;
+
+        form {
+            span {
+                font-size: 0.8rem;
+
+                &.error {
+                    float: right;
+                    margin-top: 50px;
+                }
+            }
+
+            button {
+                float: right;
+            }
+        }
+    }
 }
+
+

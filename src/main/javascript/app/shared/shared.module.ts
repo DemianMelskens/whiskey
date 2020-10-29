@@ -4,11 +4,13 @@ import {MenuComponent} from './components/menu/menu.component';
 
 
 @NgModule({
-  declarations: [MenuComponent],
-  exports: [MenuComponent],
-  imports: [
-    CommonModule,
-  ]
+    declarations: [MenuComponent],
+    exports: [
+        MenuComponent,
+    ],
+    imports: [
+        CommonModule,
+    ]
 })
 export class SharedModule {
 }

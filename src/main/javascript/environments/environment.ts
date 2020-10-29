@@ -3,8 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: ''
+    production: false,
+    enableTracing: true,
+    useRouteHash: false,
+    apiUrl: '',
+    enableHttps: false
 };
 
 /*

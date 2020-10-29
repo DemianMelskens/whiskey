@@ -2,25 +2,19 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
-import {LoginDto} from "./dtos/user/login.dto";
-import {JwtDto} from "./dtos/user/jwt.dto";
-import {RegisterDto} from "./dtos/user/register.dto";
+import {User} from "../domain/user.model";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserClient {
 
-  private readonly BASE_URL = environment.apiUrl;
+    private readonly BASE_URL = environment.apiUrl + '/users';
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  public authenticate(login: LoginDto): Observable<JwtDto> {
-    return this.http.post<JwtDto>(`${this.BASE_URL}/authenticate`, login);
-  }
-
-  public register(register: RegisterDto): Observable<string> {
-    return this.http.post<string>(`${this.BASE_URL}/register`, register);
-  }
+    public getCurrentUser(): Observable<User> {
+        return this.http.get<User>(`${this.BASE_URL}/current`);
+    }
 }

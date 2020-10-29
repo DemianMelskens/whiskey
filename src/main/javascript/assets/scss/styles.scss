@@ -10,6 +10,10 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 
+h2{
+    display: inline-block;
+}
+
 input {
     display: inline-block;
     width: 100%;
@@ -27,7 +31,8 @@ input {
         color: $primary;
     }
 
-    &.ng-invalid {
+    &.ng-invalid.ng-touched,
+    &.ng-invalid.ng-dirty{
         border-color: $danger !important;
         color: $danger !important;
     }
@@ -51,11 +56,11 @@ button {
         font-weight: bold;
         color: $light;
 
-        &:active{
+        &:active {
             background: $primary-light;
         }
 
-        &:disabled{
+        &:disabled {
             background: lighten($primary, 50);
         }
     }
@@ -64,5 +69,11 @@ button {
         border: 1px solid $dark;
         background: $light;
         color: $dark;
+    }
+}
+
+span {
+    &.error {
+        color: $danger;
     }
 }
