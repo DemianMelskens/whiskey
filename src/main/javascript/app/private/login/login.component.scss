@@ -21,23 +21,34 @@
         @include tablet-landscape {
             display: none;
         }
+
+        &-title {
+            font-size: 5rem;
+        }
     }
 
     .login {
-        background-color: $light;
         color: $dark;
 
-        form {
-            span {
+        &-form {
+            width: 100%;
+
+            &__side-note {
                 font-size: 0.8rem;
 
                 &.error {
+                    transition: .5s ease;
                     float: right;
                     margin-top: 50px;
+                    opacity: 1;
+                }
+
+                &.hidden {
+                    opacity: 0;
                 }
             }
 
-            button {
+            &__submit {
                 float: right;
             }
         }

@@ -10,7 +10,11 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 
-h2{
+body{
+    background-color: $light;
+}
+
+h2 {
     display: inline-block;
 }
 
@@ -32,7 +36,7 @@ input {
     }
 
     &.ng-invalid.ng-touched,
-    &.ng-invalid.ng-dirty{
+    &.ng-invalid.ng-dirty {
         border-color: $danger !important;
         color: $danger !important;
     }
@@ -45,13 +49,14 @@ button {
     display: inline-block;
     border: none;
     font-size: 1rem;
-    padding: 15px 25px;
+    padding: 10px 25px;
     margin-bottom: 10px;
     border-radius: 25px;
     outline: none;
     cursor: pointer;
 
     &.primary {
+        border: 2px solid transparent;
         background: $primary;
         font-weight: bold;
         color: $light;
@@ -61,14 +66,17 @@ button {
         }
 
         &:disabled {
-            background: lighten($primary, 50);
+            border: 2px solid $primary;
+            background: $white;
+            color: $primary;
+            cursor: context-menu;
         }
     }
 
     &.neutral {
-        border: 1px solid $dark;
+        border: 2px solid $primary;
         background: $light;
-        color: $dark;
+        color: $primary;
     }
 }
 
@@ -76,4 +84,9 @@ span {
     &.error {
         color: $danger;
     }
+}
+
+nav {
+    background-color: $primary;
+    color: $white;
 }

@@ -1,17 +1,19 @@
 <section class="banner">
-    <h2 class="title">[Logo]</h2>
+    <h2 class="banner-title">[Logo]</h2>
 </section>
 <section class="login">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <h2>Login</h2>
-        <span class="error" *ngIf="invalidCredentials">Invalid credentials!</span>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <h2 class="login-form__title">Login</h2>
+        <span class="login-form__side-note error" [ngClass]="{'hidden': !invalidCredentials}">
+            Invalid credentials!
+        </span>
         <label>
             <input type="text" formControlName="username" placeholder="Username"/>
         </label>
         <label>
             <input type="password" formControlName="password" placeholder="Password"/>
         </label>
-        <button type="submit" class="primary" [disabled]="!loginForm.valid">Login</button>
-        <span>New? <a [routerLink]="['/register']">register now!</a></span>
+        <button class="login-form__submit primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+        <span class="login-form__side-note">New? <a [routerLink]="['/register']">register now!</a></span>
     </form>
 </section>
