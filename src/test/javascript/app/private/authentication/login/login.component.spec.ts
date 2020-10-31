@@ -1,5 +1,5 @@
-import {LoginComponent} from '../../../../../main/javascript/app/private/login/login.component';
-import {UserService} from "../../../../../main/javascript/app/shared/services/user.service";
+import {LoginComponent} from '../../../../../../main/javascript/app/private/authentication/login/login.component';
+import {UserService} from "../../../../../../main/javascript/app/shared/services/user.service";
 import {AbstractControl, ReactiveFormsModule} from "@angular/forms";
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from "@angular/router/testing";

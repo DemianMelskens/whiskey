@@ -14,6 +14,10 @@ body {
     background-color: $light;
 }
 
+router-outlet{
+    display: none;
+}
+
 h2 {
     display: inline-block;
 }
@@ -45,8 +49,10 @@ input {
     }
 }
 
-button {
+button,
+input[type='submit']{
     display: inline-block;
+    width: fit-content;
     border: none;
     font-size: 1rem;
     padding: 10px 25px;
@@ -70,6 +76,34 @@ button {
             background: $white;
             color: $primary;
             cursor: context-menu;
+        }
+
+        &:focus,
+        &:hover{
+            box-shadow: inset 0 0 0 3px $light;
+        }
+    }
+
+    &.accent {
+        border: 2px solid transparent;
+        background: $accent;
+        font-weight: bold;
+        color: $light;
+
+        &:active {
+            background: $accent;
+        }
+
+        &:disabled {
+            border: 2px solid $accent;
+            background: $white;
+            color: $accent;
+            cursor: context-menu;
+        }
+
+        &:focus,
+        &:hover{
+            box-shadow: inset 0 0 0 3px $light;
         }
     }
 

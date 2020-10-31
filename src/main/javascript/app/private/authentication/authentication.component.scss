@@ -6,16 +6,14 @@
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     height: 100vh;
 
-    section {
+    .banner {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 20%;
-    }
-
-    .banner {
-        background-color: $primary;
+        background: $primary;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
         color: $light;
 
         @include tablet-landscape {
@@ -36,6 +34,16 @@
             &__side-note {
                 font-size: 0.8rem;
 
+                a {
+                    text-decoration: none;
+
+                    &:hover,
+                    &:focus {
+                        outline: none;
+                        text-decoration: underline;
+                    }
+                }
+
                 &.error {
                     transition: .5s ease;
                     float: right;
@@ -46,6 +54,10 @@
                 &.hidden {
                     opacity: 0;
                 }
+            }
+
+            &__title{
+                color: $primary;
             }
 
             &__submit {

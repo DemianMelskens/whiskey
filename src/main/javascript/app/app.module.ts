@@ -9,6 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PrivateModule} from "./private/private.module";
 import {AuthenticationInterceptor} from "./shared/interceptors/authentication.interceptor";
 import {HttpsInterceptor} from "./shared/interceptors/https.interceptor";
+import {SharedModule} from "./shared/shared.module";
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -25,7 +26,8 @@ export const httpInterceptorProviders = [
         AppRoutingModule,
         AdminModule,
         PublicModule,
-        PrivateModule
+        PrivateModule,
+        SharedModule
     ],
     providers: [
         httpInterceptorProviders

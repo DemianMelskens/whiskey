@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../shared/services/authentication.service";
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
     loginForm = this.formBuilder.group({
         username: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
     });
     invalidCredentials = false;
 
@@ -19,7 +21,6 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
-        private authenticationService: AuthenticationService
     ) {
     }
 
@@ -30,27 +31,32 @@ export class LoginComponent implements OnInit {
         return this.loginForm.get('username');
     }
 
+    get email(): AbstractControl {
+        return this.loginForm.get('email');
+    }
+
     get password(): AbstractControl {
         return this.loginForm.get('password');
+    }
+
+    get firstName(): AbstractControl {
+        return this.loginForm.get('firstName');
+    }
+
+    get lastName(): AbstractControl {
+        return this.loginForm.get('lastName');
     }
 
     setErrors(errors: any): void {
         this.invalidCredentials = true;
         this.username.setErrors(errors);
         this.password.setErrors(errors);
+        this.email.setErrors(errors);
+        this.firstName.setErrors(errors);
+        this.lastName.setErrors(errors);
     }
 
     onSubmit(): void {
-        this.authenticationService.authenticate(
-            this.loginForm.controls.username.value,
-            this.loginForm.controls.password.value
-        ).subscribe(
-            () => {
-                this.router.navigate(['private', 'admin']);
-            },
-            () => {
-                this.setErrors({wrong: {message: 'username or password was wrong'}});
-            }
-        )
+        // todo: link up to registration endpoint
     }
 }

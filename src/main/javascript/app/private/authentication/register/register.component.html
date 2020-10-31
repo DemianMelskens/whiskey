@@ -1,0 +1,23 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <h2 class="login-form__title">Register</h2>
+    <span class="login-form__side-note error" [ngClass]="{'hidden': !invalidCredentials}">
+            Invalid credentials!
+        </span>
+    <label>
+        <input type="text" formControlName="username" placeholder="Username"/>
+    </label>
+    <label>
+        <input type="email" formControlName="email" placeholder="Email"/>
+    </label>
+    <label>
+        <input type="password" formControlName="password" placeholder="Password"/>
+    </label>
+    <label>
+        <input type="text" formControlName="firstName" placeholder="First name"/>
+    </label>
+    <label>
+        <input type="text" formControlName="lastName" placeholder="Last name"/>
+    </label>
+    <input type="submit" class="login-form__submit accent" [disabled]="!loginForm.valid" value="Register">
+    <span class="login-form__side-note">Already have an account? <a [routerLink]="['/private/auth/login']">login!</a></span>
+</form>
