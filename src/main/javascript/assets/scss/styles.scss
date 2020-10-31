@@ -1,7 +1,7 @@
 @import "colors";
 @import "fonts";
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -10,7 +10,7 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 
-body{
+body {
     background-color: $light;
 }
 
