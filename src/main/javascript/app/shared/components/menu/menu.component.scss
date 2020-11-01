@@ -39,10 +39,6 @@
                             transform: translateY(-7px) rotateZ(-45deg);
                         }
                     }
-
-                    & *.menu-item{
-                        display: block;
-                    }
                 }
             }
 
@@ -68,8 +64,19 @@
     }
 
     .bottom {
-        min-height: 10px;
         background: $primary;
+        transition: .3s ease;
+
+        @include phone-only {
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+
+        &.shown {
+            @include phone-only {
+                transform: scaleY(1);
+            }
+        }
 
         .menu {
             display: flex;
@@ -85,7 +92,6 @@
                 padding: 5px 10px;
 
                 @include phone-only {
-                    display: none;
                     width: 100%;
                 }
 

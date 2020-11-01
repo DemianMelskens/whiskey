@@ -33,7 +33,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
-            border-left: 1px solid $primary;
+            border-left: 2px solid $primary;
 
             &:hover{
                 background: darken($light, 5);

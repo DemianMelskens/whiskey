@@ -1,6 +1,6 @@
 <section class="top">
     <h1 class="logo" [routerLink]="['/public']">
-        <input type="checkbox" id="hamburger">
+        <input #hamburger type="checkbox" id="hamburger">
         <label for="hamburger" class="hamburger">
             <div class="hamburger-stripe"></div>
             <div class="hamburger-stripe"></div>
@@ -10,7 +10,7 @@
     </h1>
     <app-user-menu></app-user-menu>
 </section>
-<section class="bottom">
+<section class="bottom" [ngClass]="{'shown':hamburger.checked}">
     <nav class="menu">
         <div class="menu-item">
             <a class="menu-item__link" href="#">Whiskies</a>
