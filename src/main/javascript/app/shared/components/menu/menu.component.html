@@ -1,5 +1,13 @@
 <section class="top">
-    <h1 class="logo" [routerLink]="['/public']">[Logo]</h1>
+    <h1 class="logo" [routerLink]="['/public']">
+        <input type="checkbox" id="hamburger">
+        <label for="hamburger" class="hamburger">
+            <div class="hamburger-stripe"></div>
+            <div class="hamburger-stripe"></div>
+            <div class="hamburger-stripe"></div>
+        </label>
+        [Logo]
+    </h1>
     <app-user-menu></app-user-menu>
 </section>
 <section class="bottom">

@@ -16,6 +16,9 @@ export class UserService {
     }
 
     public getCurrentUser(): Observable<User> {
+        this.userClient.getCurrentUser().subscribe((user: User) => {
+            this._currentUser.next(user)
+        });
         return this._currentUser.asObservable();
     }
 

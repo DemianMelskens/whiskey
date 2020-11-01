@@ -1,4 +1,5 @@
 @import "src/main/javascript/assets/scss/colors";
+@import "src/main/javascript/assets/scss/mixins";
 
 :host {
     position: fixed;
@@ -15,13 +16,59 @@
         height: 64px;
 
         .logo {
+            display: flex;
+            align-items: center;
             cursor: pointer;
             margin: 0;
             padding: 0 20px;
+
+            #hamburger {
+                display: none;
+
+                &:checked {
+                    & + .hamburger {
+                        & .hamburger-stripe:nth-child(1) {
+                            transform: translateY(7px) rotateZ(45deg);
+                        }
+
+                        & .hamburger-stripe:nth-child(2) {
+                            opacity: 0;
+                        }
+
+                        & .hamburger-stripe:nth-child(3) {
+                            transform: translateY(-7px) rotateZ(-45deg);
+                        }
+                    }
+
+                    & *.menu-item{
+                        display: block;
+                    }
+                }
+            }
+
+            .hamburger {
+                display: none;
+                cursor: pointer;
+                margin-right: 20px;
+
+                @include phone-only {
+                    display: block;
+                }
+
+                &-stripe {
+                    transition: .5s ease;
+                    background: $primary;
+                    width: 25px;
+                    height: 5px;
+                    border-radius: 3px;
+                    margin-bottom: 2px;
+                }
+            }
         }
     }
 
     .bottom {
+        min-height: 10px;
         background: $primary;
 
         .menu {
@@ -30,8 +77,17 @@
             justify-content: center;
             align-items: center;
 
+            @include phone-only {
+                flex-direction: column;
+            }
+
             &-item {
                 padding: 5px 10px;
+
+                @include phone-only {
+                    display: none;
+                    width: 100%;
+                }
 
                 &:hover {
                     background: $primary-dark;
