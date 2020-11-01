@@ -1,2 +1,17 @@
-<span>[Username]</span>
-<div class="profile-image"></div>
+<section *ngIf="!(currentUser|async)">
+    <button class="neutral small" [routerLink]="['/private/auth/login']">Login</button>
+    <button class="primary small" [routerLink]="['/private/auth/register']">Register</button>
+</section>
+<section *ngIf="currentUser | async" class="menu">
+    <label for="toggle" class="user-menu">
+        {{(currentUser | async).username}}
+        <div class="user-menu-image"></div>
+    </label>
+    <input type="checkbox" id="toggle">
+    <div class="sub-menu">
+        <div class="sub-menu-item" (click)="toDashboard()">Dashboard</div>
+        <div class="sub-menu-item">Dark theme</div>
+        <div class="sub-menu-item" (click)="logout()">Logout</div>
+    </div>
+</section>
+

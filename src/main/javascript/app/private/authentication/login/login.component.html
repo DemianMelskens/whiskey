@@ -4,10 +4,10 @@
             Invalid credentials!
         </span>
     <label>
-        <input type="text" formControlName="username" placeholder="Username"/>
+        <input type="text" formControlName="username" placeholder="Username" (change)="onChange()"/>
     </label>
     <label>
-        <input type="password" formControlName="password" placeholder="Password"/>
+        <input type="password" formControlName="password" placeholder="Password" (change)="onChange()"/>
     </label>
     <input type="submit" class="login-form__submit accent" [disabled]="!loginForm.valid" value="Login">
     <span class="login-form__side-note">New? <a [routerLink]="['/private/auth/register']">register now!</a></span>

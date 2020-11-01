@@ -40,13 +40,25 @@ export class LoginComponent implements OnInit {
         this.password.setErrors(errors);
     }
 
+    clearErrors(): void {
+        this.invalidCredentials = false;
+        this.username.setErrors(null);
+        this.password.setErrors(null);
+    }
+
+    onChange(): void {
+        if (this.loginForm.invalid) {
+            this.clearErrors();
+        }
+    }
+
     onSubmit(): void {
         this.authenticationService.authenticate(
             this.loginForm.controls.username.value,
             this.loginForm.controls.password.value
         ).subscribe(
             () => {
-                this.router.navigate(['private', 'admin']);
+                this.router.navigate(['/private/admin/dashboard']);
             },
             () => {
                 this.setErrors({wrong: {message: 'username or password was wrong'}});

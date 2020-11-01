@@ -6,14 +6,16 @@ import {map, tap} from "rxjs/operators";
 import {AuthenticationClient} from "../clients/authentication.client";
 import {UserService} from "./user.service";
 import {Role} from "../domain/enums/role.enum";
+import {Router} from '@angular/router';
 
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
     constructor(
-        private authenticationClient: AuthenticationClient,
+        private router: Router,
         private userService: UserService,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private authenticationClient: AuthenticationClient
     ) {
     }
 
@@ -27,8 +29,10 @@ export class AuthenticationService {
         );
     }
 
-    public hasAuthority(role: Role): boolean {
-        return this.userService.getCurrentUser().role === role;
+    public hasAuthority(role: Role): Observable<boolean> {
+        return this.userService.getCurrentUser().pipe(
+            map(user => role === user.role)
+        );
     }
 
     public authenticate(username: string, password: string): Observable<JwtDto> {
@@ -37,4 +41,8 @@ export class AuthenticationService {
         );
     }
 
+    public logout(): void {
+        this.tokenService.removeToken();
+        this.router.navigate(['/private/auth/login'])
+    }
 }

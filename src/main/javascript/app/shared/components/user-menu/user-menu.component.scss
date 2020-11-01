@@ -2,19 +2,78 @@
 
 
 :host {
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    & > * {
-        padding: 0 10px;
+    section {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        button {
+            margin: 0 5px;
+        }
     }
 
-    .profile-image {
-        background-color: $white;
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
+    .menu {
+        #toggle {
+            display: none;
+
+            &:checked + .sub-menu {
+                transform: scaleY(1);
+            }
+        }
+
+        .user-menu {
+            height: 100%;
+            width: 172px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-left: 1px solid $primary;
+
+            &:hover{
+                background: darken($light, 5);
+                cursor: pointer;
+            }
+
+            &-image {
+                border: 1px solid $primary;
+                background: $light;
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                margin-left: 10px;
+            }
+        }
+
+        .sub-menu {
+            width: 172px;
+            transform: scaleY(0);
+            transform-origin: top;
+            overflow: hidden;
+            border: 1px solid $primary;
+            border-top: none;
+            border-right: none;
+            position: absolute;
+            box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+            top: 64px;
+            background: $light;
+            transition: .2s ease;
+            text-align: left;
+
+            &-item {
+                cursor: pointer;
+                padding: 10px 20px;
+
+                &:hover {
+                    background: darken($light, 5);
+                }
+            }
+        }
     }
 }
 

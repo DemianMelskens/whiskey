@@ -61,6 +61,10 @@ input[type='submit']{
     outline: none;
     cursor: pointer;
 
+    &.small{
+        padding: 5px 15px;
+    }
+
     &.primary {
         border: 2px solid transparent;
         background: $primary;
@@ -80,7 +84,7 @@ input[type='submit']{
 
         &:focus,
         &:hover{
-            box-shadow: inset 0 0 0 3px $light;
+            box-shadow: inset 0 0 0 2px $light;
         }
     }
 
@@ -103,7 +107,7 @@ input[type='submit']{
 
         &:focus,
         &:hover{
-            box-shadow: inset 0 0 0 3px $light;
+            box-shadow: inset 0 0 0 2px $light;
         }
     }
 
@@ -111,6 +115,27 @@ input[type='submit']{
         border: 2px solid $primary;
         background: $light;
         color: $primary;
+
+        &:active {
+            background: darken($light, 10) !important;
+            border-color: $primary-light !important;
+            color: $primary-light !important;
+            box-shadow: none;
+        }
+
+        &:disabled {
+            border: 2px solid $primary-light;
+            background: $white;
+            color: $primary-light;
+            cursor: context-menu;
+        }
+
+        &:focus,
+        &:hover{
+            box-shadow: inset 0 0 0 2px $light;
+            background: $primary;
+            color: $light;
+        }
     }
 }
 
@@ -121,6 +146,5 @@ span {
 }
 
 nav {
-    background-color: $primary;
-    color: $white;
+    background-color: transparent;
 }

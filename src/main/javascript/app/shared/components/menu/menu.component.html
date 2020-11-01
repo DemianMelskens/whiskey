@@ -1,13 +1,17 @@
-<h1 class="logo">[Logo]</h1>
-<nav class="menu">
-    <div class="menu-item">
-        <a class="menu-item__link" href="#">Home</a>
-    </div>
-    <div class="menu-item">
-        <a class="menu-item__link" href="#">About</a>
-    </div>
-    <div class="menu-item">
-        <a class="menu-item__link" href="#">Contact</a>
-    </div>
-</nav>
-<app-user-menu></app-user-menu>
+<section class="top">
+    <h1 class="logo" [routerLink]="['/public']">[Logo]</h1>
+    <app-user-menu></app-user-menu>
+</section>
+<section class="bottom">
+    <nav class="menu">
+        <div class="menu-item">
+            <a class="menu-item__link" href="#">Whiskies</a>
+        </div>
+        <div class="menu-item">
+            <a class="menu-item__link" href="#">Distilleries</a>
+        </div>
+        <div class="menu-item">
+            <a class="menu-item__link" href="#">Bottlers</a>
+        </div>
+    </nav>
+</section>
