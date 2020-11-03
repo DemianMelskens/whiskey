@@ -7,6 +7,7 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
     z-index: 999;
     width: 100%;
+    height: 64px;
 
     .top {
         background: $light;
@@ -83,23 +84,26 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
 
             @include phone-only {
                 flex-direction: column;
             }
 
             &-item {
-                padding: 5px 10px;
-
                 @include phone-only {
                     width: 100%;
                 }
 
-                &:hover {
+                &:hover,
+                &:active{
                     background: $primary-dark;
                 }
 
                 &__link {
+                    display: block;
+                    padding: 5px 10px;
+                    width: 100%;
                     text-decoration: none;
                     color: $white;
                 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
-import {catchError, map} from "rxjs/operators";
+import {catchError, map, tap} from "rxjs/operators";
 import {BehaviorSubject, Observable, of} from "rxjs";
 
 @Injectable({providedIn: 'root'})
@@ -16,10 +16,15 @@ export class UserService {
     }
 
     public getCurrentUser(): Observable<User> {
-        this.userClient.getCurrentUser().subscribe((user: User) => {
-            this._currentUser.next(user)
-        });
-        return this._currentUser.asObservable();
+        return this.userClient.getCurrentUser().pipe(
+            tap((user: User) => {
+                this._currentUser.next(user);
+            }),
+            catchError(() => {
+                this._currentUser.next(undefined);
+                return of(undefined);
+            })
+        );
     }
 
     public authenticateUser(): Observable<boolean> {
