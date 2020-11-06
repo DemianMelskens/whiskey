@@ -1,19 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
+import {fromEvent, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements AfterViewInit {
+    @ViewChild('form') element: ElementRef;
+
     loginForm = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
     invalidCredentials = false;
+
+    submit$: Observable<Event>;
 
     constructor(
         private router: Router,
@@ -23,7 +28,9 @@ export class LoginComponent implements OnInit {
     ) {
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
+        this.submit$ = fromEvent(this.element.nativeElement, 'submit');
+        this.submit$.pipe();
     }
 
     get username(): AbstractControl {

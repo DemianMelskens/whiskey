@@ -22,7 +22,7 @@ export class UserMenuComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentUser = this.userService.getCurrentUser()
+        this.currentUser = this.userService.currentUser$;
     }
 
     toDashboard(): void {

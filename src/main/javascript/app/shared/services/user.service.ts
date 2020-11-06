@@ -1,41 +1,33 @@
 import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
-import {catchError, map, tap} from "rxjs/operators";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {BehaviorSubject, combineLatest} from "rxjs";
+
+export interface UserState {
+    user: User;
+}
+
+let _state: UserState = {
+    user: null
+}
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+    private store = new BehaviorSubject<UserState>(_state);
+    private state$ = this.store.asObservable();
 
-    private _currentUser?: BehaviorSubject<User>;
+    currentUser$ = this.state$.pipe(map(state => state.user), distinctUntilChanged());
 
-    constructor(
-        private userClient: UserClient
-    ) {
-        this._currentUser = new BehaviorSubject<User>(undefined);
+    constructor(private userClient: UserClient) {
+        combineLatest([this.currentUser$]).pipe(
+            switchMap(() => {
+                return this.userClient.getCurrentUser();
+            })
+        ).subscribe(user => this.updateState({..._state, user}))
     }
 
-    public getCurrentUser(): Observable<User> {
-        return this.userClient.getCurrentUser().pipe(
-            tap((user: User) => {
-                this._currentUser.next(user);
-            }),
-            catchError(() => {
-                this._currentUser.next(undefined);
-                return of(undefined);
-            })
-        );
-    }
-
-    public authenticateUser(): Observable<boolean> {
-        return this.userClient.getCurrentUser().pipe(
-            map((user: User) => {
-                this._currentUser.next(user);
-                return true;
-            }),
-            catchError(() => {
-                return of(false);
-            })
-        );
+    private updateState(state: UserState): void {
+        this.store.next(_state = state);
     }
 }

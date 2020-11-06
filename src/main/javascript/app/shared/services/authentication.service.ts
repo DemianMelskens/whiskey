@@ -20,17 +20,19 @@ export class AuthenticationService {
     }
 
     public isAuthenticated(): Observable<boolean> {
-        return this.userService.authenticateUser();
+        return this.userService.currentUser$.pipe(
+            map(user => user !== null)
+        );
     }
 
     public isNotAuthenticated(): Observable<boolean> {
-        return this.userService.authenticateUser().pipe(
+        return this.userService.currentUser$.pipe(
             map(authenticated => !authenticated)
         );
     }
 
     public hasAuthority(role: Role): Observable<boolean> {
-        return this.userService.getCurrentUser().pipe(
+        return this.userService.currentUser$.pipe(
             map(user => role === user.role)
         );
     }
