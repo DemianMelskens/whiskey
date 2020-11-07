@@ -26,7 +26,7 @@ export class AuthenticationService {
     }
 
     public isNotAuthenticated(): Observable<boolean> {
-        return this.userService.currentUser$.pipe(
+        return this.isAuthenticated().pipe(
             map(authenticated => !authenticated)
         );
     }

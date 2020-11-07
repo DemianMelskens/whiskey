@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
-import {distinctUntilChanged, map, switchMap} from "rxjs/operators";
-import {BehaviorSubject, combineLatest} from "rxjs";
+import {catchError, distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {BehaviorSubject, of} from "rxjs";
+import {TokenService} from "./token.service";
 
 export interface UserState {
     user: User;
@@ -14,20 +15,22 @@ let _state: UserState = {
 
 @Injectable({providedIn: 'root'})
 export class UserService {
-    private store = new BehaviorSubject<UserState>(_state);
-    private state$ = this.store.asObservable();
+    private _store = new BehaviorSubject<UserState>(_state);
+    private _state$ = this._store.asObservable();
 
-    currentUser$ = this.state$.pipe(map(state => state.user), distinctUntilChanged());
+    currentUser$ = this._state$.pipe(map(state => state.user), distinctUntilChanged());
 
-    constructor(private userClient: UserClient) {
-        combineLatest([this.currentUser$]).pipe(
+    constructor(private userClient: UserClient, private tokenService: TokenService) {
+        this.tokenService.token$.pipe(
             switchMap(() => {
-                return this.userClient.getCurrentUser();
+                return this.userClient.getCurrentUser().pipe(
+                    catchError(() => of(null))
+                );
             })
         ).subscribe(user => this.updateState({..._state, user}))
     }
 
     private updateState(state: UserState): void {
-        this.store.next(_state = state);
+        this._store.next(_state = state);
     }
 }

@@ -7,7 +7,7 @@ export interface TokenState {
 }
 
 let _state: TokenState = {
-    token: ''
+    token: localStorage.getItem('token') || sessionStorage.getItem('token')
 }
 
 @Injectable({providedIn: 'root'})
@@ -23,14 +23,16 @@ export class TokenService {
     setToken(token: string): void {
         localStorage.setItem('token', token);
         sessionStorage.setItem('token', token);
+        this.updateState({..._state, token});
     }
 
     removeToken(): void {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
+        this.updateState({..._state, token: ''});
     }
 
-    getToken(): string {
-        return localStorage.getItem('token') || sessionStorage.getItem('token');
+    private updateState(state: TokenState): void {
+        this._store.next(_state = state);
     }
 }
