@@ -22,11 +22,9 @@ export class UserService {
 
     constructor(private userClient: UserClient, private tokenService: TokenService) {
         this.tokenService.token$.pipe(
-            switchMap(() => {
-                return this.userClient.getCurrentUser().pipe(
-                    catchError(() => of(null))
-                );
-            })
+            switchMap(() => this.userClient.getCurrentUser().pipe(
+                catchError(() => of(null))
+            ))
         ).subscribe(user => this.updateState({..._state, user}))
     }
 

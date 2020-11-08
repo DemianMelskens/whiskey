@@ -32,10 +32,9 @@ export class LoginComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.submit$ = fromEvent(this.element.nativeElement, 'submit');
         this.submit$.pipe(
-            switchMap(
-                () => this.authenticationService.authenticate(
-                    this.loginForm.controls.username.value,
-                    this.loginForm.controls.password.value
+            switchMap(() => this.authenticationService.authenticate(
+                this.loginForm.controls.username.value,
+                this.loginForm.controls.password.value
                 )
             )
         ).subscribe(

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 
 export interface TokenState {
     token: string;
@@ -15,7 +15,10 @@ export class TokenService {
     private _store = new BehaviorSubject<TokenState>(_state);
     private _state$ = this._store.asObservable();
 
-    token$ = this._state$.pipe(map(state => state.token));
+    token$ = this._state$.pipe(map(state => state.token), distinctUntilChanged(),tap(token => {
+        // eslint-disable-next-line no-console
+        console.log('token: ', token);
+    }));
 
     constructor() {
     }
@@ -29,7 +32,7 @@ export class TokenService {
     removeToken(): void {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
-        this.updateState({..._state, token: ''});
+        this.updateState({..._state, token: null});
     }
 
     private updateState(state: TokenState): void {

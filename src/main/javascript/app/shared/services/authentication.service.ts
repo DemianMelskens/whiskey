@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {TokenService} from "./token.service";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {JwtDto} from "../clients/dtos/user/jwt.dto";
-import {map, tap} from "rxjs/operators";
+import {map, switchMap, tap} from "rxjs/operators";
 import {AuthenticationClient} from "../clients/authentication.client";
 import {UserService} from "./user.service";
 import {Role} from "../domain/enums/role.enum";
@@ -19,21 +19,9 @@ export class AuthenticationService {
     ) {
     }
 
-    public isAuthenticated(): Observable<boolean> {
-        return this.userService.currentUser$.pipe(
-            map(user => user !== null)
-        );
-    }
-
-    public isNotAuthenticated(): Observable<boolean> {
-        return this.isAuthenticated().pipe(
-            map(authenticated => !authenticated)
-        );
-    }
-
     public hasAuthority(role: Role): Observable<boolean> {
         return this.userService.currentUser$.pipe(
-            map(user => role === user.role)
+            switchMap(user => of(role === user.role))
         );
     }
 
