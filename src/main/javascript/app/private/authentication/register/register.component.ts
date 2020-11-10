@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
+import {AuthenticationService} from '../../../shared/services/authentication.service';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-register',
@@ -19,8 +21,8 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute,
         private formBuilder: FormBuilder,
+        private authenticationService: AuthenticationService
     ) {
     }
 
@@ -57,6 +59,19 @@ export class RegisterComponent implements OnInit {
     }
 
     onSubmit(): void {
-        // todo: link up to registration endpoint
+        this.authenticationService.register(
+            this.username.value,
+            this.email.value,
+            this.password.value,
+            this.firstName.value,
+            this.lastName.value
+        ).subscribe(
+            () => {
+                this.router.navigate(['/private/auth/login']);
+            },
+            () => {
+                this.setErrors({wrong: {message: 'username or password was wrong'}});
+            }
+        );
     }
 }

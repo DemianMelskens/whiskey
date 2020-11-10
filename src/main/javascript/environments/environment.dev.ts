@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    enableTracing: false,
+    enableTracing: true,
     useRouteHash: false,
     apiUrl: "http://localhost:8080/api",
     enableHttps: false

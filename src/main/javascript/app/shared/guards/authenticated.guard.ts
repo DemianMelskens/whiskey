@@ -3,13 +3,15 @@ import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {switchMap, tap} from "rxjs/operators";
 import {TokenService} from '../services/token.service';
+import {UserService} from '../services/user.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticatedGuard implements CanActivate {
 
     constructor(
         private router: Router,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private userService: UserService
     ) {
     }
 
@@ -17,10 +19,10 @@ export class AuthenticatedGuard implements CanActivate {
         return this.tokenService.token$.pipe(
             switchMap(token => of(token !== null)),
             tap(authenticated => {
-                // eslint-disable-next-line no-console
-                console.log('authenticated: ', authenticated);
                 if (!authenticated) {
-                    this.router.navigate(['private', 'admin']);
+                    this.tokenService.removeToken();
+                    this.userService.updateUser(null);
+                    this.router.navigate(['private', 'auth', 'login']);
                 }
             })
         );

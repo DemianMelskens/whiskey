@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {TokenService} from "./token.service";
 import {Observable, of} from "rxjs";
 import {JwtDto} from "../clients/dtos/user/jwt.dto";
-import {map, switchMap, tap} from "rxjs/operators";
+import {switchMap, tap} from "rxjs/operators";
 import {AuthenticationClient} from "../clients/authentication.client";
 import {UserService} from "./user.service";
 import {Role} from "../domain/enums/role.enum";
@@ -34,5 +34,9 @@ export class AuthenticationService {
     public logout(): void {
         this.tokenService.removeToken();
         this.router.navigate(['/private/auth/login'])
+    }
+
+    public register(username: string, email: string, password: string, firstName: string, lastName: string): Observable<string> {
+        return this.authenticationClient.register({username, email, password, firstName, lastName});
     }
 }
