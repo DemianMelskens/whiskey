@@ -27,7 +27,9 @@ export class AuthenticationService {
 
     public authenticate(username: string, password: string): Observable<JwtDto> {
         return this.authenticationClient.authenticate({username, password, rememberMe: false}).pipe(
-            tap(jwt => this.tokenService.setToken(jwt.token))
+            tap(jwt => {
+                this.tokenService.setToken(jwt.token)
+            })
         );
     }
 

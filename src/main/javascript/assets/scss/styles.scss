@@ -100,7 +100,7 @@ input[type='submit']{
 
         &:disabled {
             border: 2px solid $accent;
-            background: $white;
+            background: $light;
             color: $accent;
             cursor: context-menu;
         }

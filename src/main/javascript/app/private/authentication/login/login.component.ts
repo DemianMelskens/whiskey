@@ -42,6 +42,8 @@ export class LoginComponent {
             this.password.value
         ).subscribe(
             () => {
+                // eslint-disable-next-line no-console
+                console.log('authenticate is called');
                 this.router.navigate(['/private/admin/dashboard']);
             },
             () => {

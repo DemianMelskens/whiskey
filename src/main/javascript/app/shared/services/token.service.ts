@@ -20,13 +20,21 @@ export class TokenService {
     constructor() {
     }
 
+    public getSnapshot(): TokenState {
+        return _state;
+    }
+
     public setToken(token: string): void {
+        // eslint-disable-next-line no-console
+        console.log('token is set to:', token);
         localStorage.setItem('token', token);
         sessionStorage.setItem('token', token);
         this.updateState({..._state, token});
     }
 
     public removeToken(): void {
+        // eslint-disable-next-line no-console
+        console.log('token is removed');
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         this.updateState({..._state, token: null});

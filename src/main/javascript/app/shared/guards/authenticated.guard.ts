@@ -1,11 +1,11 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
-import {switchMap, tap} from "rxjs/operators";
+import {map, switchMap, tap} from "rxjs/operators";
 import {TokenService} from '../services/token.service';
 import {UserService} from '../services/user.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class AuthenticatedGuard implements CanActivate {
 
     constructor(
@@ -17,14 +17,17 @@ export class AuthenticatedGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.tokenService.token$.pipe(
-            switchMap(token => of(token !== null)),
-            tap(authenticated => {
-                if (!authenticated) {
-                    this.tokenService.removeToken();
-                    this.userService.updateUser(null);
-                    this.router.navigate(['private', 'auth', 'login']);
-                }
+            switchMap(token => {
+                // eslint-disable-next-line no-console
+                console.log('token: ', token);
+                return of(token !== null ? true: this.notAuthenticated());
             })
         );
+    }
+
+    notAuthenticated() {
+        this.tokenService.removeToken();
+        this.userService.updateUser(null);
+        return this.router.parseUrl('private/auth/login')
     }
 }

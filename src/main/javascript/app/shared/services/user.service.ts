@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
 import {catchError, distinctUntilChanged, filter, map, switchMap, tap} from "rxjs/operators";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject, EMPTY, of} from "rxjs";
 import {TokenService} from "./token.service";
 import {Router} from '@angular/router';
 
@@ -28,15 +28,8 @@ export class UserService {
     ) {
         this.tokenService.token$.pipe(
             filter(token => token !== null),
-            switchMap(() => this.userClient.getCurrentUser().pipe(
-                catchError(() => of(null).pipe(
-                    tap(() => {
-                        this.tokenService.removeToken();
-                        this.router.navigate(['private', 'auth', 'login']);
-                    })
-                ))
-            ))
-        ).subscribe(user => this.updateState({..._state, user}))
+            switchMap(() => this.userClient.getCurrentUser())
+        ).subscribe(user => this.updateUser(user));
     }
 
     public updateUser(user: User | null): void {

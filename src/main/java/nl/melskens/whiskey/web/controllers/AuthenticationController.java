@@ -35,7 +35,7 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticate(@Valid @RequestBody LoginDto loginDTO) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+            new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, loginDTO.isRememberMe());
