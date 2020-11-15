@@ -1,31 +1,47 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
-import {Subscription} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {switchMap} from 'rxjs/operators';
+import {JwtDto} from '../../../shared/clients/dtos/user/jwt.dto';
+import {SubscriptionComponent} from '../../../shared/components/base/subscription/subscription.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent extends SubscriptionComponent implements OnInit {
     loginForm = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
     invalidCredentials = false;
-    subscription: Subscription;
+
+    onSubmit$: Subject<void> = new Subject<void>();
 
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService
     ) {
+        super();
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    ngOnInit(): void {
+        this.subscriptions.push(
+            this.onSubmit$.pipe(
+                switchMap(() => this.onSubmit())
+            ).subscribe(
+                () => {
+                    this.router.navigate(['/private/admin/dashboard']);
+                },
+                () => {
+                    this.setErrors({wrong: {message: 'username or password was wrong'}});
+                }
+            )
+        );
     }
 
     get username(): AbstractControl {
@@ -42,19 +58,10 @@ export class LoginComponent implements OnDestroy {
         this.password.setErrors(errors);
     }
 
-    onSubmit(): void {
-        this.subscription = this.authenticationService.authenticate(
+    onSubmit(): Observable<JwtDto> {
+        return this.authenticationService.authenticate(
             this.username.value,
             this.password.value
-        ).subscribe(
-            () => {
-                // eslint-disable-next-line no-console
-                console.log('authenticate is called');
-                this.router.navigate(['/private/admin/dashboard']);
-            },
-            () => {
-                this.setErrors({wrong: {message: 'username or password was wrong'}});
-            }
-        );
+        )
     }
 }

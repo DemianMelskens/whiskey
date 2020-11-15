@@ -13,13 +13,13 @@
 <section class="bottom" [ngClass]="{'shown':hamburger.checked}">
     <nav class="menu">
         <div class="menu-item">
-            <a class="menu-item__link" href="#">Whiskies</a>
+            <a class="menu-item__link" [routerLink]="['/public']">Whiskies</a>
         </div>
         <div class="menu-item">
-            <a class="menu-item__link" href="#">Distilleries</a>
+            <a class="menu-item__link" [routerLink]="['/public','distilleries']">Distilleries</a>
         </div>
         <div class="menu-item">
-            <a class="menu-item__link" href="#">Bottlers</a>
+            <a class="menu-item__link" [routerLink]="['/public','bottlers']">Bottlers</a>
         </div>
     </nav>
 </section>

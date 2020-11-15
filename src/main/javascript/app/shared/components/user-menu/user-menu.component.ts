@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../domain/user.model';
 import {UserService} from '../../services/user.service';
 import {AuthenticationService} from '../../services/authentication.service';
-import {Role} from '../../domain/enums/role.enum';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -26,13 +25,7 @@ export class UserMenuComponent implements OnInit {
     }
 
     toDashboard(): void {
-        this.authenticationService.hasAuthority(Role.ADMIN).subscribe(isAdmin => {
-            if (isAdmin) {
-                this.router.navigate(['/private/admin/dashboard']);
-            } else {
-                this.router.navigate(['/private/user/dashboard']);
-            }
-        })
+        this.router.navigate(['/private/user/dashboard']);
     }
 
     logout() {

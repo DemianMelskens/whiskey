@@ -36,7 +36,6 @@ input {
 
     &:focus {
         border-color: $primary;
-        color: $primary;
     }
 
     &.ng-invalid.ng-touched,
@@ -77,14 +76,14 @@ input[type='submit']{
 
         &:disabled {
             border: 2px solid $primary;
-            background: $white;
+            background: $light;
             color: $primary;
             cursor: context-menu;
         }
 
         &:focus,
         &:hover{
-            box-shadow: inset 0 0 0 2px $light;
+            box-shadow: inset 0 0 0 2px $primary;
         }
     }
 

@@ -5,6 +5,8 @@ import nl.melskens.whiskey.domain.Bottle;
 import nl.melskens.whiskey.domain.User;
 import nl.melskens.whiskey.repositories.BottleRepository;
 import nl.melskens.whiskey.security.SecurityContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,12 @@ public class BottleService {
     private final SecurityContext securityContext;
 
     @Transactional(readOnly = true)
-    public List<Bottle> getAll() {
-        return this.bottleRepository.findAll();
+    public Page<Bottle> getAll(final String criteria, final Pageable pageable) {
+        if (criteria == null) {
+            return this.bottleRepository.findAll(pageable);
+        } else {
+            return this.bottleRepository.findAllByNameContains(criteria, pageable);
+        }
     }
 
     @Transactional(readOnly = true)

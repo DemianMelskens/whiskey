@@ -5,6 +5,7 @@ import {UserMenuComponent} from './components/user-menu/user-menu.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {RouterModule} from '@angular/router';
+import {SubscriptionComponent} from './components/base/subscription/subscription.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import {RouterModule} from '@angular/router';
         MenuComponent,
         UserMenuComponent,
         LoaderComponent,
+        SubscriptionComponent,
         PageNotFoundComponent
     ],
     exports: [

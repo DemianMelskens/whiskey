@@ -1,4 +1,4 @@
-<form #form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+<form #form [formGroup]="loginForm" (ngSubmit)="onSubmit$.next()" class="login-form">
     <h2 class="login-form__title">Login</h2>
     <span class="login-form__side-note error" [ngClass]="{'hidden': !invalidCredentials}">
             Invalid credentials!
@@ -9,6 +9,6 @@
     <label>
         <input type="password" formControlName="password" placeholder="Password"/>
     </label>
-    <input type="submit" class="login-form__submit accent" [disabled]="!loginForm.valid" value="Login">
+    <button class="login-form__submit primary" [disabled]="!loginForm.valid">Login</button>
     <span class="login-form__side-note">New? <a [routerLink]="['/private/auth/register']">register now!</a></span>
 </form>
