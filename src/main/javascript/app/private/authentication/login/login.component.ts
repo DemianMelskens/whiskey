@@ -1,25 +1,31 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
     loginForm = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
     invalidCredentials = false;
+    subscription: Subscription;
 
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService
     ) {
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     get username(): AbstractControl {
@@ -37,7 +43,7 @@ export class LoginComponent {
     }
 
     onSubmit(): void {
-        this.authenticationService.authenticate(
+        this.subscription = this.authenticationService.authenticate(
             this.username.value,
             this.password.value
         ).subscribe(

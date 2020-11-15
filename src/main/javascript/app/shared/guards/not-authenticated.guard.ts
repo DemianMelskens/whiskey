@@ -1,20 +1,20 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
-import {map, switchMap, tap} from "rxjs/operators";
-import {TokenService} from '../services/token.service';
+import {switchMap} from "rxjs/operators";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Injectable()
 export class NotAuthenticationGuard implements CanActivate {
 
     constructor(
         private router: Router,
-        private tokenService: TokenService
+        private authenticationService: AuthenticationService
     ) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.tokenService.token$.pipe(
+        return this.authenticationService.token$.pipe(
             switchMap(token => {
                 // eslint-disable-next-line no-console
                 console.log('token: ', token);
