@@ -1,0 +1,17 @@
+:host{
+    display: block;
+    padding: 10px;
+
+    .bottle{
+        text-align: center;
+        &-image{
+            display: block;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        &-info{
+
+        }
+    }
+}

@@ -18,4 +18,9 @@ export class BottlesComponent implements OnInit {
         this.bottles = this.bottleService.bottles$;
     }
 
+    changePageSize(pageSize: number) {
+        // eslint-disable-next-line no-console
+        console.log('change page size:', pageSize);
+        this.bottleService.updatePagination(pageSize);
+    }
 }

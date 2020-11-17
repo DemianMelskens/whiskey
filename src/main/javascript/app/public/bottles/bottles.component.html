@@ -1,3 +1,4 @@
-<p *ngFor="let bottle of bottles | async">
-    <span>{{bottle.name}}</span>
-</p>
+<app-pagination-controls (onSizeChange)="changePageSize($event)"></app-pagination-controls>
+<div class="card-container">
+    <app-bottle-card *ngFor="let bottle of bottles | async" [bottle]="bottle"></app-bottle-card>
+</div>

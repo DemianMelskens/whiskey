@@ -21,8 +21,8 @@ export class BottleClient {
     buildParams(criteria: string, pagination: Pagination): HttpParams {
         const params = new HttpParams();
         params.append('criteria', criteria);
-        params.append('pageSize', pagination.pageSize.toFixed());
-        params.append('currentPage', pagination.currentPage.toFixed());
+        params.append('pageSize', pagination.pageSize.toString());
+        params.append('currentPage', pagination.currentPage.toString());
         return params;
     }
 }

@@ -1,0 +1,12 @@
+<label>
+    <input type="text" (change)="onCriteriaChange()"/>
+</label>
+<div class="sizes" *ngFor="let size of pageSizes">
+    <label [attr.for]="'size-' + size">
+        {{size}}
+    </label>
+    <input id="{{'size-' + size}}" type="radio" name="pageSizes" value="{{size}}"
+           [checked]="pageSize===size"
+           (click)="onSizeChange($event.target.value)">
+</div>
+
