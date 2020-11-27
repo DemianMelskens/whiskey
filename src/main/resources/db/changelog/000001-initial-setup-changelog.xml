@@ -38,7 +38,7 @@
       </column>
       <column name="name" type="varchar(255)"/>
       <column name="age" type="bigint"/>
-      <column name="abv" type="bigint"/>
+      <column name="abv" type="double"/>
       <column name="volume" type="bigint"/>
       <column name="brand_id" type="bigint"/>
     </createTable>

@@ -13,3 +13,13 @@ id,name,age,abv,volume,brand_id
 12,laphroaig four oak,-1,40,700,2
 13,laphroaig càirdeas port & wine,-1,40,700,2
 14,johnnie walker red label,-1,40,700,3
+15,balvenie 12 years double wood,12,40,700,4
+16,balvenie 12 years single barrel,12,47.8,700,4
+17,balvenie 12 years triple cask,12,40,1000,4
+18,balvenie 14 years caribbean cask,14,43,700,4
+19,balvenie 16 years triple cask,16,40,700,4
+20,balvenie 17 years double wood,17,43,700,4
+21,balvenie 21 years madeira,21,40,700,4
+22,balvenie 21 years port wood,21,40,700,4
+23,balvenie 30 years,30,47.3,700,4
+24,balvenie founder's reserve,10,40,700,4

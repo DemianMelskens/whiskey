@@ -23,16 +23,7 @@ h2 {
 }
 
 input {
-    display: inline-block;
-    width: 100%;
-    font-size: .9rem;
-    border: 1px solid $mid;
-    border-radius: 3px;
-    color: $mid;
-    padding: 15px 10px;
-    margin-bottom: 10px;
-    outline: none;
-    transition: .5s ease;
+
 
     &:focus {
         border-color: $primary;
@@ -44,7 +35,17 @@ input {
         color: $danger !important;
     }
 
-    &[type="text"] {
+    &[type="text"], &[type="password"], &[type="email"] {
+        display: inline-block;
+        width: 100%;
+        font-size: .9rem;
+        border: 1px solid $mid;
+        border-radius: 3px;
+        color: $mid;
+        padding: 15px 10px;
+        margin-bottom: 10px;
+        outline: none;
+        transition: .5s ease;
     }
 }
 
@@ -59,6 +60,10 @@ input[type='submit']{
     border-radius: 25px;
     outline: none;
     cursor: pointer;
+
+    &.straight {
+        border-radius: 3px;
+    }
 
     &.small{
         padding: 5px 15px;
@@ -136,6 +141,13 @@ input[type='submit']{
             color: $light;
         }
     }
+}
+
+select{
+    border-radius: 3px;
+    padding: 5px 5px;
+    border: none;
+    font-size: revert;
 }
 
 span {

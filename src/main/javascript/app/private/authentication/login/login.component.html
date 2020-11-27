@@ -1,13 +1,13 @@
-<form #form [formGroup]="loginForm" (ngSubmit)="onSubmit$.next()" class="login-form">
+<form #form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <h2 class="login-form__title">Login</h2>
     <span class="login-form__side-note error" [ngClass]="{'hidden': !invalidCredentials}">
             Invalid credentials!
         </span>
     <label>
-        <input type="text" formControlName="username" placeholder="Username"/>
+        <input type="text" formControlName="username" placeholder="Username" autocomplete="username"/>
     </label>
     <label>
-        <input type="password" formControlName="password" placeholder="Password"/>
+        <input type="password" formControlName="password" placeholder="Password" autocomplete="current-password"/>
     </label>
     <button class="login-form__submit primary" [disabled]="!loginForm.valid">Login</button>
     <span class="login-form__side-note">New? <a [routerLink]="['/private/auth/register']">register now!</a></span>

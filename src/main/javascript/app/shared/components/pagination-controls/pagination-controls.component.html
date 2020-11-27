@@ -1,0 +1,20 @@
+<div class="pagination" *ngIf="(pagination$ | async) as pagination">
+    <div class="pagination-filters">
+        <span class="page-info">bottles per page:</span>
+        <select (change)="onChangePageSize($event.target.value)">
+            <option *ngFor="let size of pagination.pageSizes"
+                    [selected]="pagination.pageSize === size">{{size}}</option>
+        </select>
+    </div>
+    <div class="pagination-buttons">
+        <button class="small straight" [hidden]="pagination.currentPage == 0"
+                (click)="changeCurrentPage(pagination.currentPage - 1, pagination.totalPages)">
+            <i class="fas fa-angle-left"></i>
+        </button>
+        <button class="small straight" [hidden]="pagination.currentPage >= pagination.totalPages - 1"
+                (click)="changeCurrentPage(pagination.currentPage + 1, pagination.totalPages)">
+            <i class="fas fa-angle-right"></i>
+        </button>
+        <span class="page-info">page {{pagination.currentPage + 1}} of {{pagination.totalPages}}</span>
+    </div>
+</div>

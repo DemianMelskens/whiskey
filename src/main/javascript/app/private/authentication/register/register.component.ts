@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from '../../../shared/services/authentication.service';
-import {Subject} from 'rxjs';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -65,6 +66,8 @@ export class RegisterComponent implements OnInit {
             this.password.value,
             this.firstName.value,
             this.lastName.value
+        ).pipe(
+            untilDestroyed(this)
         ).subscribe(
             () => {
                 this.router.navigate(['/private/auth/login']);

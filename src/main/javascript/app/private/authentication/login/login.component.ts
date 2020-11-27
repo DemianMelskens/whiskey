@@ -6,42 +6,29 @@ import {Observable, Subject} from "rxjs";
 import {switchMap} from 'rxjs/operators';
 import {JwtDto} from '../../../shared/clients/dtos/user/jwt.dto';
 import {SubscriptionComponent} from '../../../shared/components/base/subscription/subscription.component';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends SubscriptionComponent implements OnInit {
+export class LoginComponent implements OnInit {
     loginForm = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
     invalidCredentials = false;
 
-    onSubmit$: Subject<void> = new Subject<void>();
-
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService
     ) {
-        super();
     }
 
     ngOnInit(): void {
-        this.subscriptions.push(
-            this.onSubmit$.pipe(
-                switchMap(() => this.onSubmit())
-            ).subscribe(
-                () => {
-                    this.router.navigate(['/private/admin/dashboard']);
-                },
-                () => {
-                    this.setErrors({wrong: {message: 'username or password was wrong'}});
-                }
-            )
-        );
     }
 
     get username(): AbstractControl {
@@ -58,10 +45,19 @@ export class LoginComponent extends SubscriptionComponent implements OnInit {
         this.password.setErrors(errors);
     }
 
-    onSubmit(): Observable<JwtDto> {
-        return this.authenticationService.authenticate(
+    onSubmit(): void {
+        this.authenticationService.authenticate(
             this.username.value,
             this.password.value
-        )
+        ).pipe(
+            untilDestroyed(this)
+        ).subscribe(
+            () => {
+                this.router.navigate(['/private/admin/dashboard']);
+            },
+            () => {
+                this.setErrors({wrong: {message: 'username or password was wrong'}});
+            }
+        );
     }
 }

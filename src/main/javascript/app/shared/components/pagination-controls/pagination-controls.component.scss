@@ -1,0 +1,26 @@
+@import "src/main/javascript/assets/scss/colors";
+
+:host {
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+
+        &-buttons {
+            button {
+                margin: 0 5px 0 0;
+            }
+        }
+
+        &-filters {
+            select {
+                margin: 0 0 0 5px;
+            }
+        }
+    }
+}
+
+.page-info {
+    color: $white;
+}

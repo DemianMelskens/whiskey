@@ -16,8 +16,6 @@ export class NotAuthenticationGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.authenticationService.token$.pipe(
             switchMap(token => {
-                // eslint-disable-next-line no-console
-                console.log('token: ', token);
                 return of(token === null ? true : this.router.parseUrl('private/admin'));
             })
         );

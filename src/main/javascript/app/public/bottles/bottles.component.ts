@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Bottle} from '../../shared/domain/bottle.model';
 import {BottleService} from '../../shared/services/bottle.service';
+import {Pagination} from "../../shared/domain/pagination.model";
 
 @Component({
     selector: 'app-bottles',
@@ -9,18 +10,22 @@ import {BottleService} from '../../shared/services/bottle.service';
     styleUrls: ['./bottles.component.scss']
 })
 export class BottlesComponent implements OnInit {
-    bottles: Observable<Bottle[]>;
+    bottles$: Observable<Bottle[]>;
+    pagination$: Observable<Pagination>;
 
     constructor(private bottleService: BottleService) {
     }
 
     ngOnInit(): void {
-        this.bottles = this.bottleService.bottles$;
+        this.bottles$ = this.bottleService.bottles$;
+        this.pagination$ = this.bottleService.pagination$;
     }
 
     changePageSize(pageSize: number) {
-        // eslint-disable-next-line no-console
-        console.log('change page size:', pageSize);
-        this.bottleService.updatePagination(pageSize);
+        this.bottleService.updatePageSize(pageSize);
+    }
+
+    changeCurrentPage(currentPage: number) {
+        this.bottleService.updateCurrentPage(currentPage);
     }
 }

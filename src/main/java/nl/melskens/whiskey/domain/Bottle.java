@@ -3,6 +3,7 @@ package nl.melskens.whiskey.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
@@ -18,7 +19,7 @@ public class Bottle {
 
   private Long age;
 
-  private Long abv; // in percentages
+  private BigDecimal abv; // in percentages
 
   private Long volume; // in ml
 
