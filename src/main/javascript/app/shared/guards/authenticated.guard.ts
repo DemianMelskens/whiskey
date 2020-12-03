@@ -24,8 +24,7 @@ export class AuthenticatedGuard implements CanActivate {
     }
 
     notAuthenticated() {
-        this.authenticationService.removeToken();
-        this.userService.updateUser(null);
+        this.userService.logout();
         return this.router.parseUrl('private/auth/login')
     }
 }

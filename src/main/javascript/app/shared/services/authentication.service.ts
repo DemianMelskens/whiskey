@@ -35,11 +35,6 @@ export class AuthenticationService {
         );
     }
 
-    public logout(): void {
-        this.removeToken();
-        this.router.navigate(['/private/auth/login'])
-    }
-
     public register(username: string, email: string, password: string, firstName: string, lastName: string): Observable<string> {
         return this.authenticationClient.register({username, email, password, firstName, lastName});
     }

@@ -1,10 +1,10 @@
-<section *ngIf="!(currentUser | async)">
+<section *ngIf="!(currentUser$ | async)">
     <button class="neutral small" [routerLink]="['/private/auth/login']">Login</button>
     <button class="primary small" [routerLink]="['/private/auth/register']">Register</button>
 </section>
-<section *ngIf="currentUser | async" class="menu">
+<section *ngIf="currentUser$ | async as currentUser" class="menu">
     <label for="toggle" class="user-menu">
-        {{(currentUser | async).username | titlecase}}
+        {{currentUser.username | titlecase}}
         <div class="user-menu-image"></div>
     </label>
     <input type="checkbox" id="toggle">
