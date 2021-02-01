@@ -13,8 +13,7 @@ export class UserClient {
 
     constructor(
         private http: HttpClient,
-    ) {
-    }
+    ) {}
 
     public getCurrentUser(): Observable<User> {
         return this.http.get<User>(`${this.BASE_URL}/current`);

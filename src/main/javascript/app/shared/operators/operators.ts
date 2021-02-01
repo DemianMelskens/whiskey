@@ -6,7 +6,6 @@ export function debug(name?: string): MonoTypeOperatorFunction<any> {
     return tap(object => {
         if (!environment.production) {
             console.debug(name ? name : '', object);
-            console.trace();
         }
     });
 }

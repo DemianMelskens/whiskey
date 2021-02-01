@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import nl.melskens.whiskey.services.BottleService;
 import nl.melskens.whiskey.web.dtos.bottle.AddFavoritesDto;
 import nl.melskens.whiskey.web.dtos.bottle.BottleDto;
-import nl.melskens.whiskey.web.dtos.bottle.BottlePageDto;
 import nl.melskens.whiskey.web.dtos.bottle.UpdateFavoritesDto;
+import nl.melskens.whiskey.web.dtos.page.PageDto;
 import nl.melskens.whiskey.web.mappers.BottleMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,7 @@ public class BottleController {
     private final BottleMapper bottleMapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public BottlePageDto getAll(
+    public PageDto<BottleDto> getAll(
         @RequestParam(required = false) final String criteria,
         @RequestParam(defaultValue = "20") final int pageSize,
         @RequestParam(defaultValue = "0") final int currentPage

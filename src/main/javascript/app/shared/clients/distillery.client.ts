@@ -1,22 +1,22 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Pagination} from '../domain/pagination.model';
+import {Observable} from 'rxjs';
 import {PageDto} from './dtos/page/page.dto';
-import {Bottle} from '../domain/bottle.model';
+import {Distillery} from '../domain/distillery.model';
 
 @Injectable({providedIn: 'root'})
-export class BottleClient {
+export class DistilleryClient {
 
-    private readonly BASE_URL = environment.apiUrl + '/bottles';
+    private readonly BASE_URL = environment.apiUrl + '/distilleries';
 
     constructor(private http: HttpClient) {
     }
 
-    public findBottles(criteria: string, pagination: Pagination): Observable<PageDto<Bottle>> {
+    public findDistilleries(criteria: string, pagination: Pagination): Observable<PageDto<Distillery>> {
         const params = this.buildParams(criteria, pagination);
-        return this.http.get<PageDto<Bottle>>(`${this.BASE_URL}`, {params});
+        return this.http.get<PageDto<Distillery>>(`${this.BASE_URL}`, {params});
     }
 
     buildParams(criteria: string, pagination: Pagination): HttpParams {

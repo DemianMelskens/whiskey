@@ -1,4 +1,4 @@
-package nl.melskens.whiskey.web.dtos.bottle;
+package nl.melskens.whiskey.web.dtos.page;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class BottlePageDto {
-    private List<BottleDto> bottles;
+public class PageDto<T> {
+    private List<T> items;
     private long currentPage;
     private long totalItems;
     private long totalPages;

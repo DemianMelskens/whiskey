@@ -1,0 +1,10 @@
+<app-pagination-controls
+    (pageSize)="changePageSize($event)"
+    (currentPage)="changeCurrentPage($event)"
+    [pagination]="pagination$">
+</app-pagination-controls>
+<div class="card-container">
+    <p *ngFor="let distillery of distilleries$ | async">
+        {{distillery.name}}
+    </p>
+</div>

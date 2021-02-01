@@ -2,7 +2,7 @@ package nl.melskens.whiskey.web.mappers;
 
 import nl.melskens.whiskey.domain.Bottle;
 import nl.melskens.whiskey.web.dtos.bottle.BottleDto;
-import nl.melskens.whiskey.web.dtos.bottle.BottlePageDto;
+import nl.melskens.whiskey.web.dtos.page.PageDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
@@ -16,9 +16,9 @@ public abstract class BottleMapper {
 
     public abstract List<BottleDto> toDtos(List<Bottle> bottles);
 
-    public BottlePageDto toPageDto(final Page<Bottle> page) {
-        final BottlePageDto dto = new BottlePageDto();
-        dto.setBottles(toDtos(page.getContent()));
+    public PageDto<BottleDto> toPageDto(final Page<Bottle> page) {
+        final PageDto<BottleDto> dto = new PageDto<>();
+        dto.setItems(toDtos(page.getContent()));
         dto.setCurrentPage(page.getNumber());
         dto.setTotalItems(page.getTotalElements());
         dto.setTotalPages(page.getTotalPages());

@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
-import {catchError, distinctUntilChanged, filter, map, switchMap, tap} from "rxjs/operators";
-import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {catchError, distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {BehaviorSubject, Observable, of, throwError} from "rxjs";
 import {Router} from '@angular/router';
 import {AuthenticationService} from "./authentication.service";
-import {debug} from "../operators/operators";
 
 export interface UserState {
     user: User;
@@ -28,30 +27,28 @@ export class UserService {
         private authenticationService: AuthenticationService
     ) {
         this.authenticationService.token$.pipe(
-            debug('token:'),
-            filter(token => token !== null),
-            switchMap(() => this.getCurrentUser())
+            switchMap(token => this.getCurrentUser(token)),
         ).subscribe(user => this.updateUser(user));
     }
 
-    public getCurrentUser(): Observable<User> {
-        return this.userClient.getCurrentUser().pipe(
-            catchError(err => {
-                this.logout();
-                return throwError(err);
-            })
-        );
+    public getCurrentUser(token: string): Observable<User> {
+        if (token != null) {
+            return this.userClient.getCurrentUser().pipe(
+                catchError(err => {
+                    this.logout();
+                    return throwError(err);
+                })
+            );
+        }
+        return of(null);
     }
 
     public updateUser(user: User | null): void {
-        console.debug(user);
-        console.trace();
         this.updateState({..._state, user});
     }
 
     public logout() {
         this.authenticationService.removeToken();
-        this.updateUser(null);
     }
 
     private updateState(state: UserState): void {
