@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
-import {Pagination} from '../domain/pagination.model';
-import {Distillery} from '../domain/distillery.model';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
-import {DistilleryClient} from '../clients/distillery.client';
+import {Pagination} from '../domain/pagination.model';
+import {BottlerClient} from '../clients/bottler.client';
+import {Bottler} from '../domain/bottler.model';
 import {LoadingService} from './loading.service';
 
-export interface DistilleryState {
-    distilleries: Distillery[];
+export interface BottlerState {
+    bottlers: Bottler[];
     pagination: Pagination;
     criteria: string;
 }
 
-let _state: DistilleryState = {
-    distilleries: [],
+let _state: BottlerState = {
+    bottlers: [],
     pagination: {
         currentPage: 0,
         pageSize: 20,
@@ -24,26 +24,26 @@ let _state: DistilleryState = {
 }
 
 @Injectable({providedIn: 'root'})
-export class DistilleryService {
-    private _store = new BehaviorSubject<DistilleryState>(_state);
+export class BottlerService {
+    private _store = new BehaviorSubject<BottlerState>(_state);
     private _state$ = this._store.asObservable();
 
-    public distilleries$ = this._state$.pipe(map(state => state.distilleries), distinctUntilChanged());
+    public bottlers$ = this._state$.pipe(map(state => state.bottlers), distinctUntilChanged());
     public pageSize$ = this._state$.pipe(map(state => state.pagination.pageSize), distinctUntilChanged());
     public currentPage$ = this._state$.pipe(map(state => state.pagination.currentPage), distinctUntilChanged());
     public pagination$ = this._state$.pipe(map(state => state.pagination), distinctUntilChanged());
     public criteria$ = this._state$.pipe(map(state => state.criteria), distinctUntilChanged());
 
     constructor(
-        private distilleryClient: DistilleryClient,
+        private bottlerClient: BottlerClient,
         private loadingService: LoadingService
     ) {
         combineLatest([this.criteria$, this.pageSize$, this.currentPage$]).pipe(
             switchMap(([criteria]) => {
-                return this.findDistilleries(criteria, _state.pagination);
+                return this.findBottlers(criteria, _state.pagination);
             })
-        ).subscribe(distilleries => {
-            this.updateState({..._state, distilleries});
+        ).subscribe(bottlers => {
+            this.updateState({..._state, bottlers});
             this.loadingService.changeLoading(false);
         });
     }
@@ -65,8 +65,8 @@ export class DistilleryService {
         this.loadingService.changeLoading(true);
     }
 
-    private findDistilleries(criteria: string, pagination: Pagination): Observable<Distillery[]> {
-        return this.distilleryClient.findDistilleries(criteria, pagination).pipe(
+    private findBottlers(criteria: string, pagination: Pagination): Observable<Bottler[]> {
+        return this.bottlerClient.findBottlers(criteria, pagination).pipe(
             tap(page => {
                 const pagination = {..._state.pagination, totalPages: page.totalPages};
                 this.updateState({..._state, pagination});
@@ -75,8 +75,7 @@ export class DistilleryService {
         );
     }
 
-    private updateState(state: DistilleryState) {
+    private updateState(state: BottlerState) {
         this._store.next(_state = state);
     }
-
 }

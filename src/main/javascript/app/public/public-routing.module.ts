@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PublicComponent} from "./public.component";
 import {BottlesComponent} from './bottles/bottles.component';
 import {DistilleriesComponent} from './distilleries/distilleries.component';
+import {BottlersComponent} from './bottlers/bottlers.component';
 
 const routes: Routes = [
     {
@@ -11,6 +12,7 @@ const routes: Routes = [
         children: [
             {path: '', redirectTo: 'bottles', pathMatch: 'full'},
             {path: 'bottles', component: BottlesComponent},
+            {path: 'bottlers', component: BottlersComponent},
             {path: 'distilleries', component: DistilleriesComponent},
         ]
     }

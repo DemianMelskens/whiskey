@@ -4,8 +4,8 @@
     [pagination]="pagination$">
 </app-pagination-controls>
 <div class="card-container">
-    <p *ngFor="let distillery of distilleries$ | async">
-        name: {{distillery.name}}
-        city: {{distillery.address.city}}
+    <p *ngFor="let bottler of bottlers$ | async">
+        name: {{bottler.name}}
+        city: {{bottler.country}}
     </p>
 </div>
