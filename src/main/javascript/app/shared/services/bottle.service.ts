@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
+import {distinctUntilChanged, map, pluck, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../domain/pagination.model';
 import {Bottle} from '../domain/bottle.model';
 import {BottleClient} from '../clients/bottle.client';
@@ -28,11 +28,11 @@ export class BottleService {
     private _store = new BehaviorSubject<BottleState>(_state);
     private _state$ = this._store.asObservable();
 
-    public bottles$ = this._state$.pipe(map(state => state.bottles), distinctUntilChanged());
-    public pageSize$ = this._state$.pipe(map(state => state.pagination.pageSize), distinctUntilChanged());
-    public currentPage$ = this._state$.pipe(map(state => state.pagination.currentPage), distinctUntilChanged());
-    public pagination$ = this._state$.pipe(map(state => state.pagination), distinctUntilChanged());
-    public criteria$ = this._state$.pipe(map(state => state.criteria), distinctUntilChanged());
+    public bottles$ = this._state$.pipe(pluck('bottles'), distinctUntilChanged());
+    public pageSize$ = this._state$.pipe(pluck('pagination', 'pageSize'), distinctUntilChanged());
+    public currentPage$ = this._state$.pipe(pluck('pagination', 'currentPage'), distinctUntilChanged());
+    public pagination$ = this._state$.pipe(pluck('pagination'), distinctUntilChanged());
+    public criteria$ = this._state$.pipe(pluck('criteria'), distinctUntilChanged());
 
     constructor(
         private bottleClient: BottleClient,

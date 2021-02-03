@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserClient} from '../clients/user.client';
 import {User} from "../domain/user.model";
-import {catchError, distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {catchError, distinctUntilChanged, pluck, switchMap} from "rxjs/operators";
 import {BehaviorSubject, Observable, of, throwError} from "rxjs";
 import {Router} from '@angular/router';
 import {AuthenticationService} from "./authentication.service";
@@ -19,7 +19,7 @@ export class UserService {
     private _store = new BehaviorSubject<UserState>(_state);
     private _state$ = this._store.asObservable();
 
-    public currentUser$ = this._state$.pipe(map(state => state.user), distinctUntilChanged());
+    public currentUser$ = this._state$.pipe(pluck('user'), distinctUntilChanged());
 
     constructor(
         private router: Router,

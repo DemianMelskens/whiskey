@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {JwtDto} from "../clients/dtos/user/jwt.dto";
-import {distinctUntilChanged, map, tap} from "rxjs/operators";
+import {distinctUntilChanged, pluck, tap} from "rxjs/operators";
 import {AuthenticationClient} from "../clients/authentication.client";
 import {Router} from '@angular/router';
 
@@ -19,7 +19,7 @@ export class AuthenticationService {
     private _store = new BehaviorSubject<AuthenticationState>(_state);
     private _state$ = this._store.asObservable();
 
-    public token$ = this._state$.pipe(map(state => state.token), distinctUntilChanged());
+    public token$ = this._state$.pipe(pluck('token'), distinctUntilChanged());
 
     constructor(
         private router: Router,

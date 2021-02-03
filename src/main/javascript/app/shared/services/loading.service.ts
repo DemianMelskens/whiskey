@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {distinctUntilChanged, map} from 'rxjs/operators';
+import {distinctUntilChanged, pluck} from 'rxjs/operators';
 
 export interface LoadingState {
     loading: boolean;
@@ -15,7 +15,7 @@ export class LoadingService {
     private _store = new BehaviorSubject<LoadingState>(_state);
     private _state$ = this._store.asObservable();
 
-    public loading$ = this._state$.pipe(map(state => state.loading), distinctUntilChanged());
+    public loading$ = this._state$.pipe(pluck('loading'), distinctUntilChanged());
 
     changeLoading(loading: boolean): void {
         this.updateState({loading})
