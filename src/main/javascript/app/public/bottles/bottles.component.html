@@ -6,3 +6,8 @@
 <div class="card-container">
     <app-bottle-card *ngFor="let bottle of bottles$ | async" [bottle]="bottle"></app-bottle-card>
 </div>
+<app-pagination-controls
+    (pageSize)="changePageSize($event)"
+    (currentPage)="changeCurrentPage($event)"
+    [pagination]="pagination$">
+</app-pagination-controls>

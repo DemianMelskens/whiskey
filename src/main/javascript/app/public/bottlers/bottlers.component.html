@@ -9,3 +9,8 @@
         city: {{bottler.country}}
     </p>
 </div>
+<app-pagination-controls
+    (pageSize)="changePageSize($event)"
+    (currentPage)="changeCurrentPage($event)"
+    [pagination]="pagination$">
+</app-pagination-controls>
