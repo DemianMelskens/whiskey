@@ -1,4 +1,4 @@
-import {LoginComponent} from '../../../../../../main/javascript/app/private/authentication/login/login.component';
+import {LoginComponent} from '../../../../../../main/javascript/app/features/authentication/containers/login/login.component';
 import {UserService} from "../../../../../../main/javascript/app/shared/services/user.service";
 import {AbstractControl, ReactiveFormsModule} from "@angular/forms";
 import {ComponentFixture, TestBed} from '@angular/core/testing';

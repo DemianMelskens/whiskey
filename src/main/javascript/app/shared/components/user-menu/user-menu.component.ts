@@ -23,11 +23,11 @@ export class UserMenuComponent implements OnInit {
     }
 
     toDashboard(): void {
-        this.router.navigate(['/private/user/dashboard']);
+        this.router.navigate(['/']);
     }
 
     logout() {
         this.userService.logout();
-        this.router.navigate(['/private/auth/login'])
+        this.router.navigate(['/auth/login'])
     }
 }

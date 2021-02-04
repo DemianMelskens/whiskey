@@ -1,2 +1,3 @@
-<app-loader *ngIf="loading"></app-loader>
+<app-loader *ngIf="loading$ | async"></app-loader>
+<app-menu *ngIf="showMenu"></app-menu>
 <router-outlet></router-outlet>

@@ -3,7 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {switchMap} from "rxjs/operators";
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from "../../features/authentication/authentication.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationInterceptor implements HttpInterceptor {

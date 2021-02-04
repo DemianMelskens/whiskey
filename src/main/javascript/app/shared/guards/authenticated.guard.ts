@@ -3,7 +3,7 @@ import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {switchMap} from "rxjs/operators";
 import {UserService} from '../services/user.service';
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from "../../features/authentication/authentication.service";
 
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {

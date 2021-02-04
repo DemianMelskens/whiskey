@@ -25,7 +25,11 @@
                         "aot": true,
                         "assets": [
                             "src/main/javascript/favicon.ico",
-                            "src/main/javascript/assets"
+                            {
+                                "glob": "**/*",
+                                "input": "src/main/javascript/assets",
+                                "output": "/assets/"
+                            }
                         ],
                         "styles": [
                             "./node_modules/normalize.css/normalize.css",

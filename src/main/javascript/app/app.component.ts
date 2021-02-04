@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
-import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent} from "@angular/router";
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
+import {filter} from 'rxjs/operators';
+import {cast} from './shared/operators/operators';
+import {LoadingService} from './shared/services/loading.service';
 
 @Component({
     selector: 'app-root',
@@ -8,23 +11,33 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 })
 export class AppComponent {
     title = 'whiskey';
-    loading = false;
+    readonly blackListedUrl = [
+        '/auth/login',
+        '/auth/register'
+    ]
+    showMenu = true;
+    loading$ = this.loadingService.loading$;
 
-    constructor(private router: Router) {
-        this.router.events.subscribe((event: RouterEvent) => {
-            this.checkEvent(event);
-        });
-    }
 
-    private checkEvent(event: RouterEvent): void {
-        if (event instanceof NavigationStart) {
-            this.loading = true;
-        }
+    constructor(
+        private router: Router,
+        private loadingService: LoadingService
+    ) {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationStart)
+        ).subscribe(() => this.loadingService.updateLoading(true));
 
-        if (event instanceof NavigationEnd ||
-            event instanceof NavigationCancel ||
-            event instanceof NavigationError) {
-            this.loading = false;
-        }
+        this.router.events.pipe(
+            filter(event => (
+                event instanceof NavigationEnd ||
+                event instanceof NavigationCancel ||
+                event instanceof NavigationError
+            ))
+        ).subscribe(() => this.loadingService.updateLoading(false));
+
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd),
+            cast(NavigationEnd)
+        ).subscribe(event => this.showMenu = !this.blackListedUrl.includes(event.url));
     }
 }

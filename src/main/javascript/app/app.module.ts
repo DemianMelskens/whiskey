@@ -3,13 +3,14 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {AdminModule} from "./private/admin/admin.module";
-import {PublicModule} from "./public/public.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {PrivateModule} from "./private/private.module";
 import {AuthenticationInterceptor} from "./shared/interceptors/authentication.interceptor";
 import {HttpsInterceptor} from "./shared/interceptors/https.interceptor";
 import {SharedModule} from "./shared/shared.module";
+import {BottlerModule} from './features/bottler/bottler.module';
+import {BottleModule} from './features/bottle/bottle.module';
+import {DistilleryModule} from './features/distillery/distillery.module';
+import {AuthenticationModule} from './features/authentication/authentication.module';
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -24,9 +25,10 @@ export const httpInterceptorProviders = [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
-        AdminModule,
-        PublicModule,
-        PrivateModule,
+        AuthenticationModule,
+        BottlerModule,
+        BottleModule,
+        DistilleryModule,
         SharedModule
     ],
     providers: [

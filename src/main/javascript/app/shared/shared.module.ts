@@ -5,8 +5,6 @@ import {UserMenuComponent} from './components/user-menu/user-menu.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {RouterModule} from '@angular/router';
-import {SubscriptionComponent} from './components/base/subscription/subscription.component';
-import {BottleCardComponent} from './components/bottles/bottle-card/bottle-card.component';
 import {PaginationControlsComponent} from './components/pagination-controls/pagination-controls.component';
 
 
@@ -15,9 +13,7 @@ import {PaginationControlsComponent} from './components/pagination-controls/pagi
         MenuComponent,
         UserMenuComponent,
         LoaderComponent,
-        SubscriptionComponent,
         PageNotFoundComponent,
-        BottleCardComponent,
         PaginationControlsComponent
     ],
     exports: [
@@ -25,7 +21,6 @@ import {PaginationControlsComponent} from './components/pagination-controls/pagi
         UserMenuComponent,
         LoaderComponent,
         PageNotFoundComponent,
-        BottleCardComponent,
         PaginationControlsComponent
     ],
     imports: [

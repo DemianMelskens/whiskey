@@ -1,6 +1,6 @@
 <section *ngIf="!(currentUser$ | async)">
-    <button class="neutral small" [routerLink]="['/private/auth/login']">Login</button>
-    <button class="primary small" [routerLink]="['/private/auth/register']">Register</button>
+    <button class="neutral small" [routerLink]="['auth','login']">Login</button>
+    <button class="primary small" [routerLink]="['auth','register']">Register</button>
 </section>
 <section *ngIf="currentUser$ | async as currentUser" class="menu">
     <label for="toggle" class="user-menu">

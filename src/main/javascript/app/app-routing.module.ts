@@ -4,9 +4,11 @@ import {environment} from "../environments/environment";
 import {PageNotFoundComponent} from "./shared/components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
-    {path: '', redirectTo: 'public', pathMatch: 'full'},
-    {path: 'public', loadChildren: './public/public.module#PublicModule'},
-    {path: 'private', loadChildren: './private/private.module#PrivateModule'},
+    {path: '', redirectTo: 'bottles', pathMatch: 'full'},
+    {path: 'bottles', loadChildren: './features/bottle/bottle.module#BottleModule'},
+    {path: 'bottlers', loadChildren: './features/bottler/bottler.module#BottlerModule'},
+    {path: 'distilleries', loadChildren: './features/distillery/distillery.module#DistilleryModule'},
+    {path: 'auth', loadChildren: './features/authentication/authentication.module#AuthenticationModule'},
     {path: '**', component: PageNotFoundComponent}
 ];
 

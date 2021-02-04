@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {UserClient} from '../../../../../main/javascript/app/shared/clients/authentication.client';
+import {UserClient} from '../../../../../main/javascript/app/features/authentication/clients/authentication.client';
 
 describe('AuthenticationService', () => {
   let service: UserClient;

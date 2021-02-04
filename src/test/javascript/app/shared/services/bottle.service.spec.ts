@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BottleService } from '../../../../../main/javascript/app/shared/services/bottle.service';
+import { BottleService } from '../../../../../main/javascript/app/features/bottle/bottle.service';
 
 describe('BottleService', () => {
   let service: BottleService;

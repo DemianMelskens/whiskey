@@ -2,7 +2,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {switchMap} from "rxjs/operators";
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from "../../features/authentication/authentication.service";
 
 @Injectable()
 export class NotAuthenticationGuard implements CanActivate {
