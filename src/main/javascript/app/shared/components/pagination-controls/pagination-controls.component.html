@@ -1,9 +1,8 @@
 <div class="pagination" *ngIf="(pagination$ | async) as pagination">
     <div class="pagination-filters">
         <span class="page-info">bottles per page:</span>
-        <select (change)="onChangePageSize($event.target.value)">
-            <option *ngFor="let size of pagination.pageSizes"
-                    [selected]="pagination.pageSize === size">{{size}}</option>
+        <select class="form-control" (change)="onChangePageSize($event.target.value)" [(ngModel)]="pagination.pageSize">
+            <option *ngFor="let size of pagination.pageSizes">{{size}}</option>
         </select>
     </div>
     <div class="pagination-buttons">

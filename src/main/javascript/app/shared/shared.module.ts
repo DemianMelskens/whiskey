@@ -6,6 +6,7 @@ import {LoaderComponent} from './components/loader/loader.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {RouterModule} from '@angular/router';
 import {PaginationControlsComponent} from './components/pagination-controls/pagination-controls.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {PaginationControlsComponent} from './components/pagination-controls/pagi
     ],
     imports: [
         CommonModule,
+        FormsModule,
         RouterModule
     ]
 })
