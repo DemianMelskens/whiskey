@@ -7,7 +7,7 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
 import {RouterModule} from '@angular/router';
 import {PaginationControlsComponent} from './components/pagination-controls/pagination-controls.component';
 import {FormsModule} from '@angular/forms';
-
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -22,12 +22,14 @@ import {FormsModule} from '@angular/forms';
         UserMenuComponent,
         LoaderComponent,
         PageNotFoundComponent,
-        PaginationControlsComponent
+        PaginationControlsComponent,
+        FontAwesomeModule
     ],
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        FontAwesomeModule
     ]
 })
 export class SharedModule {

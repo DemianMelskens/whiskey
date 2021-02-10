@@ -1,17 +1,36 @@
-:host{
+:host {
     display: block;
     padding: 10px;
 
-    .bottle{
+    .bottle {
         text-align: center;
-        &-image{
+
+        &-image {
             display: block;
             height: 200px;
             margin: 0 auto;
         }
 
-        &-info{
+        &-favorite {
+            text-align: right;
+            font-size: 20px;
+            height: 20px;
 
+            &-icon {
+                display: none;
+
+                :hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+
+    }
+
+    &:hover > .bottle-favorite {
+        .bottle-favorite-icon {
+            display: inline-block;
         }
     }
 }

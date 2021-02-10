@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Bottle} from '../../models/bottle.model';
 import {BottleService} from '../../bottle.service';
 import {Pagination} from "../../../../shared/domain/pagination.model";
-import {ActivatedRoute} from '@angular/router';
+import {debug} from '../../../../shared/operators/operators';
 
 @Component({
     selector: 'app-bottles',
@@ -20,7 +20,7 @@ export class BottlesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.bottles$ = this.bottleService.bottles$;
+        this.bottles$ = this.bottleService.bottles$.pipe(debug('bottles'));
         this.pagination$ = this.bottleService.pagination$;
     }
 

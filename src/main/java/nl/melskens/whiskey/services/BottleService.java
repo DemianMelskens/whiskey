@@ -43,16 +43,16 @@ public class BottleService {
     }
 
     @Transactional
-    public void updateFavorites(final List<Long> whiskeyIds) {
+    public void addFavorite(final Long bottleId) {
         final User user = userService.getCurrentUser();
-        final List<Bottle> favorites = bottleRepository.findAllById(whiskeyIds);
-        user.setFavorites(favorites);
+        final Optional<Bottle> whiskey = bottleRepository.findById(bottleId);
+        whiskey.ifPresent(user::addFavorite);
     }
 
     @Transactional
-    public void addFavorite(final Long whiskeyId) {
+    public void removeFavorite(final Long bottleId) {
         final User user = userService.getCurrentUser();
-        final Optional<Bottle> whiskey = bottleRepository.findById(whiskeyId);
-        whiskey.ifPresent(user::addFavorite);
+        final Optional<Bottle> whiskey = bottleRepository.findById(bottleId);
+        whiskey.ifPresent(user::removeFavorite);
     }
 }

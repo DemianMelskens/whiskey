@@ -25,7 +25,6 @@ public abstract class BottleMapper {
         return dto;
     }
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "brand", ignore = true)
     public abstract Bottle toEntity(BottleDto dto);
 }

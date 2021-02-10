@@ -11,10 +11,20 @@ import {BottlerModule} from './features/bottler/bottler.module';
 import {BottleModule} from './features/bottle/bottle.module';
 import {DistilleryModule} from './features/distillery/distillery.module';
 import {AuthenticationModule} from './features/authentication/authentication.module';
+import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
+import {faAngleLeft, faAngleRight, faStar as fasStar} from '@fortawesome/free-solid-svg-icons';
+import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true},
+];
+
+export const fontAwesomeIcons = [
+    faAngleLeft,
+    faAngleRight,
+    fasStar,
+    farStar
 ];
 
 @NgModule({
@@ -37,4 +47,7 @@ export const httpInterceptorProviders = [
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(library: FaIconLibrary) {
+        library.addIcons(...fontAwesomeIcons);
+    }
 }

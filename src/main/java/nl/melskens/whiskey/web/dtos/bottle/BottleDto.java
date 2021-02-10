@@ -5,21 +5,25 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 public class BottleDto {
 
-  @NotBlank
-  private String name;
+    @NotNull
+    private Long id;
 
-  @NotNull
-  private Long age;
+    @NotBlank
+    private String name;
 
-  @NotNull
-  private Long abv;
+    @NotNull
+    private Long age;
 
-  @NotNull
-  private Long volume;
+    @NotNull
+    private Long abv;
+
+    @NotNull
+    private Long volume;
+
+    private boolean favorite;
 }

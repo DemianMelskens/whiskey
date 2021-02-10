@@ -19,6 +19,14 @@ export class BottleClient {
         return this.http.get<PageDto<Bottle>>(`${this.BASE_URL}`, {params});
     }
 
+    public addFavorite(bottleId: number): Observable<any> {
+        return this.http.post<void>(`${this.BASE_URL}/favorites/${bottleId}`, {});
+    }
+
+    public removeFavorite(bottleId: number): Observable<any> {
+        return this.http.delete(`${this.BASE_URL}/favorites/${bottleId}`);
+    }
+
     buildParams(criteria: string, pagination: Pagination): HttpParams {
         return new HttpParams()
             .append('criteria', criteria)

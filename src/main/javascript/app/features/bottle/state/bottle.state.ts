@@ -36,6 +36,10 @@ export class BottleState {
         this.updateState({..._state, bottles});
     }
 
+    public updateBottle(bottle: Bottle): void {
+        this.updateState({..._state, bottles: [..._state.bottles, bottle]});
+    }
+
     public updateSearchCriteria(criteria: string): void {
         this.updateState({..._state, criteria});
     }

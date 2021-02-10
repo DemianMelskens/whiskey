@@ -2,9 +2,7 @@ package nl.melskens.whiskey.web.controllers;
 
 import lombok.RequiredArgsConstructor;
 import nl.melskens.whiskey.services.BottleService;
-import nl.melskens.whiskey.web.dtos.bottle.AddFavoritesDto;
 import nl.melskens.whiskey.web.dtos.bottle.BottleDto;
-import nl.melskens.whiskey.web.dtos.bottle.UpdateFavoritesDto;
 import nl.melskens.whiskey.web.dtos.page.PageDto;
 import nl.melskens.whiskey.web.mappers.BottleMapper;
 import org.springframework.data.domain.PageRequest;
@@ -44,15 +42,15 @@ public class BottleController {
         return bottleMapper.toDtos(bottleService.getFavorites());
     }
 
-    @PostMapping(path = "/favorites", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addFavorite(@Valid @RequestBody final AddFavoritesDto dto) {
-        bottleService.addFavorite(dto.getId());
+    @PostMapping(path = "/favorites/{bottleId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addFavorite(@PathVariable("bottleId") final Long bottleId) {
+        bottleService.addFavorite(bottleId);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(path = "/favorites", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateFavorites(@RequestBody final UpdateFavoritesDto dto) {
-        bottleService.updateFavorites(dto.getIds());
+    @DeleteMapping(path = "/favorites/{bottleId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateFavorites(@PathVariable("bottleId") final Long bottleId) {
+        bottleService.removeFavorite(bottleId);
         return ResponseEntity.ok().build();
     }
 }

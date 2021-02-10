@@ -1,3 +1,9 @@
+<div class="bottle-favorite">
+    <div class="bottle-favorite-icon" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+        <fa-icon *ngIf="(showFavorite | async)" [icon]="['fas', 'star']"></fa-icon>
+        <fa-icon *ngIf="!(showFavorite | async)" [icon]="['far', 'star']"></fa-icon>
+    </div>
+</div>
 <img class="bottle-image" src="/assets/images/default-bottle.png" alt="default-bottle"/>
 <div class="bottle-info">
     <h3 class="bottle-name">{{bottle.name}}</h3>

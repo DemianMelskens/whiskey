@@ -8,11 +8,11 @@
     <div class="pagination-buttons">
         <button class="small straight" [hidden]="pagination.currentPage == 0"
                 (click)="changeCurrentPage(pagination.currentPage - 1, pagination.totalPages)">
-            <i class="fas fa-angle-left"></i>
+            <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
         </button>
         <button class="small straight" [hidden]="pagination.currentPage >= pagination.totalPages - 1"
                 (click)="changeCurrentPage(pagination.currentPage + 1, pagination.totalPages)">
-            <i class="fas fa-angle-right"></i>
+            <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
         </button>
         <span class="page-info">page {{pagination.currentPage + 1}} of {{pagination.totalPages}}</span>
     </div>

@@ -51,6 +51,20 @@ export class BottleService {
         this.loadingService.updateLoading(true);
     }
 
+    public toggleFavorite(bottle: Bottle): void {
+        if (bottle.favorite) {
+            this.bottleClient.removeFavorite(bottle.id).subscribe(() => {
+                bottle.favorite = false;
+                this.bottleState.updateBottle(bottle);
+            });
+        } else {
+            this.bottleClient.addFavorite(bottle.id).subscribe(() => {
+                bottle.favorite = true;
+                this.bottleState.updateBottle(bottle);
+            });
+        }
+    }
+
     private findBottles(criteria: string, pagination: Pagination): Observable<Bottle[]> {
         return this.bottleClient.findBottles(criteria, pagination).pipe(
             tap(page => {

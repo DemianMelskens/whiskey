@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Bottle} from '../../models/bottle.model';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'app-bottle-card',
@@ -9,10 +10,19 @@ import {Bottle} from '../../models/bottle.model';
 export class BottleCardComponent implements OnInit {
 
     @Input("bottle") bottle: Bottle;
+    showFavorite = new BehaviorSubject(false);
 
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    mouseEnter(): void {
+        this.showFavorite.next(true);
+    }
+
+    mouseLeave(): void {
+        this.showFavorite.next(this.bottle.favorite);
     }
 }
