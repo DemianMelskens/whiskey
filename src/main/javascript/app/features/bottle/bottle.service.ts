@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
-import {distinctUntilChanged, map, pluck, switchMap, tap} from 'rxjs/operators';
+import {distinctUntilChanged, map, mergeMap, pluck, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../shared/domain/pagination.model';
 import {Bottle} from './models/bottle.model';
 import {BottleClient} from './clients/bottle.client';
@@ -32,6 +32,12 @@ export class BottleService {
         ).subscribe(bottles => {
             this.bottleState.updateBottles(bottles);
             this.loadingService.updateLoading(false);
+        });
+
+        this.authenticationState.token$.pipe(
+            mergeMap(() => this.getFavorites())
+        ).subscribe(favorites => {
+            this.bottleState.applyFavorites(favorites);
         });
     }
 
@@ -85,4 +91,7 @@ export class BottleService {
         );
     }
 
+    private getFavorites(): Observable<Bottle[]> {
+        return this.bottleClient.getFavorites();
+    }
 }

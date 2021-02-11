@@ -19,6 +19,10 @@ export class BottleClient {
         return this.http.get<PageDto<Bottle>>(`${this.BASE_URL}`, {params});
     }
 
+    public getFavorites(): Observable<Bottle[]> {
+        return this.http.get<Bottle[]>(`${this.BASE_URL}/favorites`);
+    }
+
     public addFavorite(bottleId: number): Observable<any> {
         return this.http.post<void>(`${this.BASE_URL}/favorites/${bottleId}`, {});
     }

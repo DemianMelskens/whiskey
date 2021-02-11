@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {JwtDto} from "./clients/dtos/jwt.dto";
-import {distinctUntilChanged, pluck, tap} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 import {AuthenticationClient} from "./clients/authentication.client";
 import {Router} from '@angular/router';
 import {AuthenticationState} from './state/authentication.state';
@@ -9,7 +9,7 @@ import {AuthenticationState} from './state/authentication.state';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-    public token$ = this.authenticationState._state$.pipe(pluck('token'), distinctUntilChanged());
+    public token$ = this.authenticationState.token$;
 
     constructor(
         private router: Router,

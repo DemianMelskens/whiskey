@@ -40,6 +40,12 @@ export class BottleState {
         this.updateState({..._state, bottles: [..._state.bottles, bottle]});
     }
 
+    public applyFavorites(favorites: Bottle[]): void {
+        const bottles = [..._state.bottles];
+        bottles.forEach(bottle => bottle.favorite = favorites.includes(bottle));
+        this.updateState({..._state, bottles})
+    }
+
     public updateSearchCriteria(criteria: string): void {
         this.updateState({..._state, criteria});
     }
