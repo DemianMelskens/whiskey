@@ -6,6 +6,8 @@ import {Bottle} from './models/bottle.model';
 import {BottleClient} from './clients/bottle.client';
 import {LoadingService} from '../../shared/services/loading.service';
 import {BottleState} from './state/bottle.state';
+import {AuthenticationState} from "../authentication/state/authentication.state";
+import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class BottleService {
@@ -19,6 +21,8 @@ export class BottleService {
     constructor(
         private bottleClient: BottleClient,
         private bottleState: BottleState,
+        private authenticationState: AuthenticationState,
+        private router: Router,
         private loadingService: LoadingService
     ) {
         combineLatest([this.criteria$, this.pageSize$, this.currentPage$]).pipe(
@@ -52,16 +56,20 @@ export class BottleService {
     }
 
     public toggleFavorite(bottle: Bottle): void {
-        if (bottle.favorite) {
-            this.bottleClient.removeFavorite(bottle.id).subscribe(() => {
-                bottle.favorite = false;
-                this.bottleState.updateBottle(bottle);
-            });
+        if (this.authenticationState.getSnapshot().token !== null) {
+            if (bottle.favorite) {
+                this.bottleClient.removeFavorite(bottle.id).subscribe(() => {
+                    bottle.favorite = false;
+                    this.bottleState.updateBottle(bottle);
+                });
+            } else {
+                this.bottleClient.addFavorite(bottle.id).subscribe(() => {
+                    bottle.favorite = true;
+                    this.bottleState.updateBottle(bottle);
+                });
+            }
         } else {
-            this.bottleClient.addFavorite(bottle.id).subscribe(() => {
-                bottle.favorite = true;
-                this.bottleState.updateBottle(bottle);
-            });
+            this.router.navigate(['auth', 'login']);
         }
     }
 

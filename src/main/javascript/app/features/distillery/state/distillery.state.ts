@@ -29,7 +29,7 @@ export class DistilleryState {
     }
 
     public getSnapshot(): State {
-        return _state;
+        return {..._state};
     }
 
     public updatePagination(pagination: Pagination): void {

@@ -29,7 +29,7 @@ export class BottlerState {
     }
 
     public getSnapshot(): State {
-        return _state;
+        return {..._state};
     }
 
     public updateBottles(bottlers: Bottler[]): void {

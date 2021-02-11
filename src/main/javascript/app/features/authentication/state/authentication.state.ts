@@ -17,6 +17,10 @@ export class AuthenticationState {
     constructor() {
     }
 
+    public getSnapshot(): State {
+        return {..._state};
+    }
+
     public setToken(token: string): void {
         localStorage.setItem('token', token);
         sessionStorage.setItem('token', token);

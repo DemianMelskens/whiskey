@@ -4,7 +4,7 @@
     [pagination]="pagination$">
 </app-pagination-controls>
 <div class="card-container">
-    <app-bottle-card *ngFor="let bottle of bottles$ | async" [bottle]="bottle"></app-bottle-card>
+    <app-bottle-card *ngFor="let bottle of bottles$ | async" [bottle]="bottle" (toggleFavorite)="toggleFavorite($event)"></app-bottle-card>
 </div>
 <app-pagination-controls
     (pageSize)="changePageSize($event)"

@@ -31,4 +31,8 @@ export class BottlesComponent implements OnInit {
     changeCurrentPage(currentPage: number) {
         this.bottleService.updateCurrentPage(currentPage);
     }
+
+    toggleFavorite(bottle: Bottle) {
+        this.bottleService.toggleFavorite(bottle)
+    }
 }

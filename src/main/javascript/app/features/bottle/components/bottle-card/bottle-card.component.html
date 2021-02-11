@@ -1,5 +1,6 @@
 <div class="bottle-favorite">
-    <div class="bottle-favorite-icon" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+    <div class="bottle-favorite-icon" [ngClass]="{'visible': bottle.favorite}" (mouseenter)="mouseEnter()"
+         (mouseleave)="mouseLeave()" (click)="toggleFavorite(bottle)">
         <fa-icon *ngIf="(showFavorite | async)" [icon]="['fas', 'star']"></fa-icon>
         <fa-icon *ngIf="!(showFavorite | async)" [icon]="['far', 'star']"></fa-icon>
     </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Bottle} from '../../models/bottle.model';
 import {BehaviorSubject} from 'rxjs';
 
@@ -10,6 +10,7 @@ import {BehaviorSubject} from 'rxjs';
 export class BottleCardComponent implements OnInit {
 
     @Input("bottle") bottle: Bottle;
+    @Output("toggleFavorite") favorite = new EventEmitter<Bottle>()
     showFavorite = new BehaviorSubject(false);
 
     constructor() {
@@ -24,5 +25,9 @@ export class BottleCardComponent implements OnInit {
 
     mouseLeave(): void {
         this.showFavorite.next(this.bottle.favorite);
+    }
+
+    toggleFavorite(bottle: Bottle): void {
+        this.favorite.next(bottle);
     }
 }

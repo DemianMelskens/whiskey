@@ -51,7 +51,7 @@ public class User extends AbstractAuditingEntity {
     @ManyToMany
     @JoinTable(name = "favorites",
         joinColumns = {@JoinColumn(name = "user_id")},
-        inverseJoinColumns = {@JoinColumn(name = "whiskey_id")})
+        inverseJoinColumns = {@JoinColumn(name = "bottle_id")})
     private List<Bottle> favorites = new ArrayList<>();
 
     public void addFavorite(final Bottle bottle) {
