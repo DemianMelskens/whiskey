@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest, iif, Observable, of} from 'rxjs';
 import {distinctUntilChanged, map, mergeMap, pluck, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../shared/domain/pagination.model';
 import {Bottle} from './models/bottle.model';
@@ -8,6 +8,7 @@ import {LoadingService} from '../../shared/services/loading.service';
 import {BottleState} from './state/bottle.state';
 import {AuthenticationState} from "../authentication/state/authentication.state";
 import {Router} from "@angular/router";
+import {debug} from '../../shared/operators/operators';
 
 @Injectable({providedIn: 'root'})
 export class BottleService {
@@ -35,11 +36,18 @@ export class BottleService {
         });
 
         this.authenticationState.token$.pipe(
-            mergeMap(() => this.getFavorites())
+            mergeMap((token) =>
+                iif(
+                    () => token !== null,
+                    this.getFavorites().pipe(debug('getFavorites')),
+                    of(new Array<Bottle>())
+                )
+            )
         ).subscribe(favorites => {
-            this.bottleState.applyFavorites(favorites);
+            this.bottleState.updateFavorites(favorites);
         });
     }
+
 
     public updateBottles(bottles: Bottle[]): void {
         this.bottleState.updateBottles(bottles);

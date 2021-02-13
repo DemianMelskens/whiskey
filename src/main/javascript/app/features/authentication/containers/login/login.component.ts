@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../authentication.service";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
-@UntilDestroy()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -42,18 +40,9 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(): void {
-        this.authenticationService.authenticate(
+        this.authenticationService.login(
             this.username.value,
             this.password.value
-        ).pipe(
-            untilDestroyed(this)
-        ).subscribe(
-            () => {
-                this.router.navigate(['/bottles']);
-            },
-            () => {
-                this.setErrors({wrong: {message: 'username or password was wrong'}});
-            }
         );
     }
 }
