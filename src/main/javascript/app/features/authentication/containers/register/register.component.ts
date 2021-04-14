@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from '../../authentication.service';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
     });
-    invalidCredentials = false;
 
     constructor(
         private router: Router,
@@ -50,31 +49,13 @@ export class RegisterComponent implements OnInit {
         return this.loginForm.get('lastName');
     }
 
-    setErrors(errors: any): void {
-        this.invalidCredentials = true;
-        this.username.setErrors(errors);
-        this.password.setErrors(errors);
-        this.email.setErrors(errors);
-        this.firstName.setErrors(errors);
-        this.lastName.setErrors(errors);
-    }
-
     onSubmit(): void {
-        this.authenticationService.register(
-            this.username.value,
-            this.email.value,
-            this.password.value,
-            this.firstName.value,
-            this.lastName.value
-        ).pipe(
-            untilDestroyed(this)
-        ).subscribe(
-            () => {
-                this.router.navigate(['/auth/login']);
-            },
-            () => {
-                this.setErrors({wrong: {message: 'username or password was wrong'}});
-            }
-        );
+        this.authenticationService.register({
+            username: this.username.value,
+            email: this.email.value,
+            password: this.password.value,
+            firstName: this.firstName.value,
+            lastName: this.lastName.value
+        });
     }
 }

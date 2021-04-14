@@ -43,16 +43,14 @@ public class BottleService {
     }
 
     @Transactional
-    public void addFavorite(final Long bottleId) {
+    public void toggleFavorite(final Long bottleId) {
         final User user = userService.getCurrentUser();
-        final Optional<Bottle> bottle = bottleRepository.findById(bottleId);
-        bottle.ifPresent(user::addFavorite);
-    }
-
-    @Transactional
-    public void removeFavorite(final Long bottleId) {
-        final User user = userService.getCurrentUser();
-        final Optional<Bottle> bottle = bottleRepository.findById(bottleId);
-        bottle.ifPresent(user::removeFavorite);
+        bottleRepository.findById(bottleId).ifPresent((b) -> {
+            if (user.inFavorites(b)) {
+                user.removeFavorite(b);
+                return;
+            }
+            user.addFavorite(b);
+        });
     }
 }

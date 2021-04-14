@@ -58,6 +58,10 @@ public class User extends AbstractAuditingEntity {
         this.favorites.add(bottle);
     }
 
+    public boolean inFavorites(final Bottle bottle) {
+        return this.favorites.contains(bottle);
+    }
+
     public void removeFavorite(final Bottle bottle) {
         this.favorites.remove(bottle);
     }

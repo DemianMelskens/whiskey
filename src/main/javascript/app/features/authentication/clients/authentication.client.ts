@@ -5,6 +5,7 @@ import {LoginDto} from "./dtos/login.dto";
 import {Observable} from "rxjs";
 import {JwtDto} from "./dtos/jwt.dto";
 import {RegisterDto} from "./dtos/register.dto";
+import {take} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationClient {
@@ -14,10 +15,10 @@ export class AuthenticationClient {
     }
 
     public authenticate(login: LoginDto): Observable<JwtDto> {
-        return this.http.post<JwtDto>(`${this.BASE_URL}/authenticate`, login);
+        return this.http.post<JwtDto>(`${this.BASE_URL}/authenticate`, login).pipe(take(1));
     }
 
     public register(register: RegisterDto): Observable<string> {
-        return this.http.post<string>(`${this.BASE_URL}/register`, register);
+        return this.http.post<string>(`${this.BASE_URL}/register`, register).pipe(take(1));
     }
 }

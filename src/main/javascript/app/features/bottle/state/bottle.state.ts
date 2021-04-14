@@ -22,6 +22,7 @@ let _state: State = {
 
 @Injectable({providedIn: 'root'})
 export class BottleState {
+
     private _store = new BehaviorSubject<State>(_state);
     public _state$ = this._store.asObservable();
 
@@ -37,12 +38,23 @@ export class BottleState {
     }
 
     public updateBottle(bottle: Bottle): void {
-        this.updateState({..._state, bottles: [..._state.bottles, bottle]});
+        const bottles = _state.bottles.map(b => {
+            if (b.id !== bottle.id) {
+                return b;
+            }
+            return bottle;
+        });
+
+        this.updateState({..._state, bottles});
     }
 
     public applyFavorites(favorites: Bottle[]): void {
-        const bottles = [..._state.bottles];
-        bottles.forEach(bottle => bottle.favorite = favorites.includes(bottle));
+        const bottles = _state.bottles.map(bottle => {
+            if (favorites.find(favorite => favorite.id === bottle.id)) {
+                return {...bottle, favorite: true};
+            }
+            return {...bottle, favorite: false};
+        });
         this.updateState({..._state, bottles})
     }
 

@@ -1,8 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <h2 class="login-form__title">Register</h2>
-    <span class="login-form__side-note error" [ngClass]="{'hidden': !invalidCredentials}">
-            Invalid credentials!
-        </span>
     <label>
         <input type="text" formControlName="username" placeholder="Username" autocomplete="username"/>
     </label>
@@ -19,5 +16,6 @@
         <input type="text" formControlName="lastName" placeholder="Last name"/>
     </label>
     <input type="submit" class="login-form__submit accent" [disabled]="!loginForm.valid" value="Register">
-    <span class="login-form__side-note">Already have an account? <a [routerLink]="['/private/auth/login']">login!</a></span>
+    <span class="login-form__side-note">Already have an account? <a
+        [routerLink]="['/private/auth/login']">login!</a></span>
 </form>

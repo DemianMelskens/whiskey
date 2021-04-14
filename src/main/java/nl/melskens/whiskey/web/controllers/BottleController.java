@@ -43,14 +43,8 @@ public class BottleController {
     }
 
     @PostMapping(path = "/favorites/{bottleId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addFavorite(@PathVariable("bottleId") final Long bottleId) {
-        bottleService.addFavorite(bottleId);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping(path = "/favorites/{bottleId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateFavorites(@PathVariable("bottleId") final Long bottleId) {
-        bottleService.removeFavorite(bottleId);
+    public ResponseEntity<String> toggleFavorite(@PathVariable("bottleId") final Long bottleId) {
+        bottleService.toggleFavorite(bottleId);
         return ResponseEntity.ok().build();
     }
 }

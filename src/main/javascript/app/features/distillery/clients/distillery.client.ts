@@ -5,6 +5,7 @@ import {Pagination} from '../../../shared/domain/pagination.model';
 import {Observable} from 'rxjs';
 import {PageDto} from '../../../shared/clients/dtos/page/page.dto';
 import {Distillery} from '../models/distillery.model';
+import {take} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class DistilleryClient {
@@ -16,7 +17,7 @@ export class DistilleryClient {
 
     public findDistilleries(criteria: string, pagination: Pagination): Observable<PageDto<Distillery>> {
         const params = this.buildParams(criteria, pagination);
-        return this.http.get<PageDto<Distillery>>(`${this.BASE_URL}`, {params});
+        return this.http.get<PageDto<Distillery>>(`${this.BASE_URL}`, {params}).pipe(take(1));
     }
 
     buildParams(criteria: string, pagination: Pagination): HttpParams {

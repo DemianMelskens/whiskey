@@ -3,6 +3,7 @@ import {User} from '../../domain/user.model';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {AuthenticationService} from "../../../features/authentication/authentication.service";
 
 @Component({
     selector: 'app-user-menu',
@@ -14,7 +15,8 @@ export class UserMenuComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private userService: UserService
+        private userService: UserService,
+        private authenticationService: AuthenticationService
     ) {
     }
 
@@ -27,7 +29,7 @@ export class UserMenuComponent implements OnInit {
     }
 
     logout() {
-        this.userService.logout();
+        this.authenticationService.logout();
         this.router.navigate(['/auth/login'])
     }
 }

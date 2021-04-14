@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable} from 'rxjs';
-import {distinctUntilChanged, map, mergeMap, pluck, switchMap, tap} from 'rxjs/operators';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
+import {delayWhen, distinctUntilChanged, filter, map, mergeMap, pluck, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../shared/domain/pagination.model';
 import {Bottle} from './models/bottle.model';
 import {BottleClient} from './clients/bottle.client';
 import {LoadingService} from '../../shared/services/loading.service';
 import {BottleState} from './state/bottle.state';
-import {AuthenticationState} from "../authentication/state/authentication.state";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../authentication/authentication.service";
 
 @Injectable({providedIn: 'root'})
 export class BottleService {
+
+    //event subjects
+    private readonly _onFavorite$$ = new Subject<Bottle>();
 
     public bottles$ = this.bottleState._state$.pipe(pluck('bottles'), distinctUntilChanged());
     public pageSize$ = this.bottleState._state$.pipe(pluck('pagination', 'pageSize'), distinctUntilChanged());
@@ -21,62 +24,54 @@ export class BottleService {
     constructor(
         private bottleClient: BottleClient,
         private bottleState: BottleState,
-        private authenticationState: AuthenticationState,
+        private authenticationService: AuthenticationService,
         private router: Router,
         private loadingService: LoadingService
     ) {
         combineLatest([this.criteria$, this.pageSize$, this.currentPage$]).pipe(
             switchMap(([criteria]) => {
+                this.loadingService.updateLoading(true);
                 return this.findBottles(criteria, this.bottleState.getSnapshot().pagination);
             })
         ).subscribe(bottles => {
-            this.bottleState.updateBottles(bottles);
+            this.updateBottles(bottles);
             this.loadingService.updateLoading(false);
         });
 
-        this.authenticationState.token$.pipe(
-            mergeMap(() => this.getFavorites())
+        this.authenticationService.authenticated$.pipe(
+            switchMap(authenticated => authenticated ? this.getFavorites() : of([]))
         ).subscribe(favorites => {
             this.bottleState.applyFavorites(favorites);
         });
+
+        combineLatest([this._onFavorite$$, this.authenticationService.authenticated$]).pipe(
+            filter(([_, authenticated]) => authenticated),
+            delayWhen(([bottle]) => this.bottleClient.toggleFavorite(bottle.id)),
+            map(([bottle]) => bottle)
+        ).subscribe(bottle => {
+            bottle.favorite = !bottle.favorite;
+            this.bottleState.updateBottle(bottle);
+        })
     }
 
     public updateBottles(bottles: Bottle[]): void {
         this.bottleState.updateBottles(bottles);
-        this.loadingService.updateLoading(true);
     }
 
     public updateSearchCriteria(criteria: string): void {
         this.bottleState.updateSearchCriteria(criteria);
-        this.loadingService.updateLoading(true);
     }
 
     public updatePageSize(pageSize: number): void {
         this.bottleState.updatePageSize(pageSize);
-        this.loadingService.updateLoading(true);
     }
 
     public updateCurrentPage(currentPage: number = 0): void {
         this.bottleState.updateCurrentPage(currentPage);
-        this.loadingService.updateLoading(true);
     }
 
     public toggleFavorite(bottle: Bottle): void {
-        if (this.authenticationState.getSnapshot().token !== null) {
-            if (bottle.favorite) {
-                this.bottleClient.removeFavorite(bottle.id).subscribe(() => {
-                    bottle.favorite = false;
-                    this.bottleState.updateBottle(bottle);
-                });
-            } else {
-                this.bottleClient.addFavorite(bottle.id).subscribe(() => {
-                    bottle.favorite = true;
-                    this.bottleState.updateBottle(bottle);
-                });
-            }
-        } else {
-            this.router.navigate(['auth', 'login']);
-        }
+        this._onFavorite$$.next(bottle);
     }
 
     private findBottles(criteria: string, pagination: Pagination): Observable<Bottle[]> {

@@ -5,6 +5,7 @@ import {Pagination} from '../../../shared/domain/pagination.model';
 import {Observable} from 'rxjs';
 import {PageDto} from '../../../shared/clients/dtos/page/page.dto';
 import {Bottler} from '../models/bottler.model';
+import {take} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class BottlerClient {
@@ -16,7 +17,7 @@ export class BottlerClient {
 
     public findBottlers(criteria: string, pagination: Pagination): Observable<PageDto<Bottler>> {
         const params = this.buildParams(criteria, pagination);
-        return this.http.get<PageDto<Bottler>>(`${this.BASE_URL}`, {params});
+        return this.http.get<PageDto<Bottler>>(`${this.BASE_URL}`, {params}).pipe(take(1));
     }
 
     buildParams(criteria: string, pagination: Pagination): HttpParams {

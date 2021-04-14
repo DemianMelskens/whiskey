@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {distinctUntilChanged, pluck} from "rxjs/operators";
 
 export interface State {
     token: string;
@@ -13,7 +12,7 @@ let _state: State = {
 @Injectable({providedIn: 'root'})
 export class AuthenticationState {
     private _store = new BehaviorSubject<State>(_state);
-    public token$ = this._store.pipe(pluck('token'), distinctUntilChanged());
+    public state = this._store.asObservable();
 
     constructor() {
     }

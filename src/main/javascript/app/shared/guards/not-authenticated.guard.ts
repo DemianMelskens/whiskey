@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {switchMap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {AuthenticationService} from "../../features/authentication/authentication.service";
 
 @Injectable()
@@ -14,10 +14,8 @@ export class NotAuthenticationGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.authenticationService.token$.pipe(
-            switchMap(token => {
-                return of(token === null ? true : this.router.parseUrl('private/admin'));
-            })
+        return this.authenticationService.authenticated$.pipe(
+            map(authenticated => !authenticated)
         );
     }
 }

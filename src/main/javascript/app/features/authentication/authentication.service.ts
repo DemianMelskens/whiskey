@@ -1,40 +1,60 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {JwtDto} from "./clients/dtos/jwt.dto";
-import {tap} from "rxjs/operators";
+import {Subject} from "rxjs";
+import {distinctUntilChanged, map, pluck, switchMap} from "rxjs/operators";
 import {AuthenticationClient} from "./clients/authentication.client";
 import {Router} from '@angular/router';
 import {AuthenticationState} from './state/authentication.state';
+import {Register} from "./models/register.model";
 
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-    public token$ = this.authenticationState.token$;
+
+    //event subjects
+    private readonly _onLogin$$ = new Subject<{ username: string, password: string }>();
+    private readonly _onRegister$$ = new Subject<Register>();
+
+    public token$ = this.authenticationState.state.pipe(pluck('token'), distinctUntilChanged());
+    public authenticated$ = this.token$.pipe(
+        map(token => token !== null)
+    );
 
     constructor(
         private router: Router,
         private authenticationClient: AuthenticationClient,
-        private authenticationState: AuthenticationState
+        private authenticationState: AuthenticationState,
     ) {
-    }
+        this._onLogin$$.pipe(
+            switchMap(login => this.authenticationClient.authenticate({...login, rememberMe: false}))
+        ).subscribe(jwt => {
+            this.setToken(jwt.token);
+            this.router.navigate(['/bottles']);
+        });
 
-    public authenticate(username: string, password: string): Observable<JwtDto> {
-        return this.authenticationClient.authenticate({username, password, rememberMe: false}).pipe(
-            tap(jwt => {
-                this.setToken(jwt.token)
-            })
+        this._onRegister$$.pipe(
+            switchMap(register => this.authenticationClient.register(register))
+        ).subscribe(
+            () => this.router.navigate(['/auth/login'])
         );
     }
 
-    public register(username: string, email: string, password: string, firstName: string, lastName: string): Observable<string> {
-        return this.authenticationClient.register({username, email, password, firstName, lastName});
+    public login(username: string, password: string): void {
+        this._onLogin$$.next({username, password});
     }
 
-    public setToken(token: string): void {
+    public logout(): void {
+        this.removeToken();
+    }
+
+    public register(register: Register): void {
+        this._onRegister$$.next(register);
+    }
+
+    private setToken(token: string): void {
         this.authenticationState.setToken(token);
     }
 
-    public removeToken(): void {
+    private removeToken(): void {
         this.authenticationState.removeToken();
     }
 }
