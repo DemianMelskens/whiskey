@@ -5,16 +5,16 @@ import {PageNotFoundComponent} from "./shared/components/page-not-found/page-not
 
 const routes: Routes = [
     {path: '', redirectTo: 'bottles', pathMatch: 'full'},
-    {path: 'bottles', loadChildren: './features/bottle/bottle.module#BottleModule'},
-    {path: 'bottlers', loadChildren: './features/bottler/bottler.module#BottlerModule'},
-    {path: 'distilleries', loadChildren: './features/distillery/distillery.module#DistilleryModule'},
-    {path: 'auth', loadChildren: './features/authentication/authentication.module#AuthenticationModule'},
+    {path: 'bottles', loadChildren: () => import('./features/bottle/bottle.module').then(m => m.BottleModule)},
+    {path: 'bottlers', loadChildren: () => import('./features/bottler/bottler.module').then(m => m.BottlerModule)},
+    {path: 'distilleries', loadChildren: () => import('./features/distillery/distillery.module').then(m => m.DistilleryModule)},
+    {path: 'auth', loadChildren: () => import('./features/authentication/authentication.module').then(m => m.AuthenticationModule)},
     {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, {enableTracing: environment.enableTracing, useHash: environment.useRouteHash})
+        RouterModule.forRoot(routes, { enableTracing: environment.enableTracing, useHash: environment.useRouteHash, relativeLinkResolution: 'legacy' })
     ],
     exports: [RouterModule]
 })
